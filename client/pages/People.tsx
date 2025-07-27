@@ -191,11 +191,11 @@ export default function People() {
                       </div>
 
                       {/* Company */}
-                      <div className="col-span-3 flex items-center gap-2 min-w-0">
-                        <Building2 className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                      <div className="col-span-3 flex items-center gap-3 min-w-0">
+                        <Building2 className="w-5 h-5 text-gray-400 flex-shrink-0" />
                         <div className="min-w-0">
                           <p className="font-medium text-gray-900 truncate">{person.company.name || 'Unknown Company'}</p>
-                          <p className="text-sm text-gray-500 truncate">{person.company.domain || 'No domain'}</p>
+                          <p className="text-sm text-gray-500 truncate mt-1">{person.company.domain || 'No domain'}</p>
                         </div>
                       </div>
 
