@@ -208,7 +208,7 @@ export default function People() {
                       </div>
 
                       {/* Status */}
-                      <div className="col-span-1">
+                      <div className="col-span-1 flex items-center">
                         {getStatusBadge(person.id)}
                       </div>
 
