@@ -207,9 +207,9 @@ export default function ResearchResultsPage() {
             </Card>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6">
             {/* Company Intelligence */}
-            <div className="lg:col-span-2 space-y-6">
+            <div className="xl:col-span-2 space-y-4 sm:space-y-6">
               <Card className="bg-white border border-gray-200">
                 <CardHeader>
                   <div className="flex items-center justify-between">
