@@ -127,9 +127,12 @@ export default function Index() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+              <Badge
+                variant="outline"
+                className={isConnected ? "bg-green-50 text-green-700 border-green-200" : "bg-yellow-50 text-yellow-700 border-yellow-200"}
+              >
                 <Activity className="h-3 w-3 mr-1" />
-                System Online
+                {isConnected ? 'Real-time Connected' : 'Connecting...'}
               </Badge>
             </div>
           </div>
