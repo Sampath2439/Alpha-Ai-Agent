@@ -149,15 +149,15 @@ export default function People() {
 
           {/* Research Targets */}
           <Card className="bg-white border border-gray-200">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-                <Users className="w-5 h-5" />
+            <CardHeader className="px-4 sm:px-6">
+              <CardTitle className="flex items-center gap-2 text-base sm:text-lg font-semibold text-gray-900">
+                <Users className="w-4 h-4 sm:w-5 sm:h-5" />
                 Research Targets
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              {/* Table Header */}
-              <div className="grid grid-cols-12 gap-4 pb-3 border-b border-gray-200 text-sm font-medium text-gray-500">
+            <CardContent className="px-4 sm:px-6">
+              {/* Desktop Table Header - Hidden on mobile */}
+              <div className="hidden lg:grid lg:grid-cols-12 gap-4 pb-3 border-b border-gray-200 text-sm font-medium text-gray-500">
                 <div className="col-span-3">Person</div>
                 <div className="col-span-3">Company</div>
                 <div className="col-span-2">Contact</div>
@@ -165,65 +165,126 @@ export default function People() {
                 <div className="col-span-2">Actions</div>
               </div>
 
-              {/* Table Body */}
+              {/* Desktop Table Body / Mobile Card Layout */}
               <div className="space-y-4 mt-4">
                 {filteredPeople.map((person) => (
-                  <div key={person.id} className="grid grid-cols-12 gap-4 items-center py-3 border-b border-gray-100 last:border-b-0">
-                    {/* Person */}
-                    <div className="col-span-3 flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                        <span className="text-sm font-semibold text-gray-600">
-                          {getPersonInitial(person.full_name)}
-                        </span>
+                  <div key={person.id}>
+                    {/* Desktop Layout */}
+                    <div className="hidden lg:grid lg:grid-cols-12 gap-4 items-center py-3 border-b border-gray-100 last:border-b-0">
+                      {/* Person */}
+                      <div className="col-span-3 flex items-center gap-3">
+                        <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                          <span className="text-sm font-semibold text-gray-600">
+                            {getPersonInitial(person.full_name)}
+                          </span>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900">{person.full_name || 'Unknown'}</p>
+                          <p className="text-sm text-gray-500">{person.title || 'No title'}</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-medium text-gray-900">{person.full_name || 'Unknown'}</p>
-                        <p className="text-sm text-gray-500">{person.title || 'No title'}</p>
+
+                      {/* Company */}
+                      <div className="col-span-3 flex items-center gap-2">
+                        <Building2 className="w-4 h-4 text-gray-400" />
+                        <div>
+                          <p className="font-medium text-gray-900">{person.company.name || 'Unknown Company'}</p>
+                          <p className="text-sm text-gray-500">{person.company.domain || 'No domain'}</p>
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Company */}
-                    <div className="col-span-3 flex items-center gap-2">
-                      <Building2 className="w-4 h-4 text-gray-400" />
-                      <div>
-                        <p className="font-medium text-gray-900">{person.company.name || 'Unknown Company'}</p>
-                        <p className="text-sm text-gray-500">{person.company.domain || 'No domain'}</p>
+                      {/* Contact */}
+                      <div className="col-span-2">
+                        <div className="flex items-center gap-2">
+                          <Mail className="w-4 h-4 text-gray-400" />
+                          <span className="text-sm text-gray-600 truncate">{person.email || 'No email'}</span>
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Contact */}
-                    <div className="col-span-2">
-                      <div className="flex items-center gap-2">
-                        <Mail className="w-4 h-4 text-gray-400" />
-                        <span className="text-sm text-gray-600 truncate">{person.email || 'No email'}</span>
+                      {/* Status */}
+                      <div className="col-span-2">
+                        {getStatusBadge(person.id)}
                       </div>
-                    </div>
 
-                    {/* Status */}
-                    <div className="col-span-2">
-                      {getStatusBadge(person.id)}
-                    </div>
-
-                    {/* Actions */}
-                    <div className="col-span-2 flex items-center gap-2">
-                      <Link to={`/research/${person.id}`}>
-                        <Button variant="outline" size="sm" className="text-xs">
-                          <Eye className="w-3 h-3 mr-1" />
-                          View
+                      {/* Actions */}
+                      <div className="col-span-2 flex items-center gap-2">
+                        <Link to={`/research/${person.id}`}>
+                          <Button variant="outline" size="sm" className="text-xs">
+                            <Eye className="w-3 h-3 mr-1" />
+                            View
+                          </Button>
+                        </Link>
+                        <Button
+                          size="sm"
+                          onClick={() => runResearch(person.id)}
+                          disabled={getJobProgress(person.id)?.status === 'in_progress'}
+                          className="bg-blue-600 hover:bg-blue-700 text-xs"
+                        >
+                          <Play className="w-3 h-3 mr-1" />
+                          {getJobProgress(person.id)?.status === 'in_progress' ? 'Running...' : 'Research'}
                         </Button>
-                      </Link>
-                      <Button
-                        size="sm"
-                        onClick={() => runResearch(person.id)}
-                        disabled={getJobProgress(person.id)?.status === 'in_progress'}
-                        className="bg-blue-600 hover:bg-blue-700 text-xs"
-                      >
-                        <Play className="w-3 h-3 mr-1" />
-                        {getJobProgress(person.id)?.status === 'in_progress' ? 'Running...' : 'Research'}
-                      </Button>
-                      <Button variant="outline" size="sm" className="text-xs text-red-600 hover:text-red-700">
-                        <Trash2 className="w-3 h-3" />
-                      </Button>
+                        <Button variant="outline" size="sm" className="text-xs text-red-600 hover:text-red-700">
+                          <Trash2 className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Mobile Layout */}
+                    <div className="lg:hidden border border-gray-200 rounded-lg p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                            <span className="text-sm font-semibold text-gray-600">
+                              {getPersonInitial(person.full_name)}
+                            </span>
+                          </div>
+                          <div>
+                            <p className="font-medium text-gray-900">{person.full_name || 'Unknown'}</p>
+                            <p className="text-sm text-gray-500">{person.title || 'No title'}</p>
+                          </div>
+                        </div>
+                        {getStatusBadge(person.id)}
+                      </div>
+
+                      <div className="space-y-2 text-sm">
+                        <div className="flex items-center gap-2">
+                          <Building2 className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                          <div>
+                            <span className="font-medium text-gray-900">{person.company.name || 'Unknown Company'}</span>
+                            {person.company.domain && (
+                              <span className="text-gray-500 ml-2">• {person.company.domain}</span>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <Mail className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                          <span className="text-gray-600 truncate">{person.email || 'No email'}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                        <Link to={`/research/${person.id}`}>
+                          <Button variant="outline" size="sm" className="text-xs">
+                            <Eye className="w-3 h-3 mr-1" />
+                            View
+                          </Button>
+                        </Link>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            size="sm"
+                            onClick={() => runResearch(person.id)}
+                            disabled={getJobProgress(person.id)?.status === 'in_progress'}
+                            className="bg-blue-600 hover:bg-blue-700 text-xs"
+                          >
+                            <Play className="w-3 h-3 mr-1" />
+                            {getJobProgress(person.id)?.status === 'in_progress' ? 'Running...' : 'Research'}
+                          </Button>
+                          <Button variant="outline" size="sm" className="text-xs text-red-600 hover:text-red-700">
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))}
