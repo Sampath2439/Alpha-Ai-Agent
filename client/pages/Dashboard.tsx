@@ -34,21 +34,53 @@ export default function Dashboard() {
 
   const loadData = async () => {
     try {
-      const [peopleRes, campaignsRes, companiesRes] = await Promise.all([
-        fetch('/api/people'),
-        fetch('/api/campaigns'),
-        fetch('/api/companies')
-      ]);
+      // Try to load each endpoint individually with better error handling
+      let peopleData = { people: [] };
+      let campaignsData = [];
+      let companiesData = [];
 
-      const peopleData = await peopleRes.json();
-      const campaignsData = await campaignsRes.json();
-      const companiesData = await companiesRes.json();
+      try {
+        const peopleRes = await fetch('/api/people');
+        if (peopleRes.ok) {
+          peopleData = await peopleRes.json();
+        } else {
+          console.warn('People API returned:', peopleRes.status);
+        }
+      } catch (error) {
+        console.warn('Failed to fetch people:', error);
+      }
+
+      try {
+        const campaignsRes = await fetch('/api/campaigns');
+        if (campaignsRes.ok) {
+          campaignsData = await campaignsRes.json();
+        } else {
+          console.warn('Campaigns API returned:', campaignsRes.status);
+        }
+      } catch (error) {
+        console.warn('Failed to fetch campaigns:', error);
+      }
+
+      try {
+        const companiesRes = await fetch('/api/companies');
+        if (companiesRes.ok) {
+          companiesData = await companiesRes.json();
+        } else {
+          console.warn('Companies API returned:', companiesRes.status);
+        }
+      } catch (error) {
+        console.warn('Failed to fetch companies:', error);
+      }
 
       setPeople(peopleData.people || []);
       setCampaigns(campaignsData || []);
       setCompanies(companiesData || []);
     } catch (error) {
       console.error('Failed to load data:', error);
+      // Set fallback data to prevent crashes
+      setPeople([]);
+      setCampaigns([]);
+      setCompanies([]);
     } finally {
       setLoading(false);
     }
