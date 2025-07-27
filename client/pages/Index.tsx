@@ -304,6 +304,12 @@ export default function Index() {
                         </div>
                         
                         <div className="flex items-center gap-2">
+                          <Link to={`/research/${person.id}`}>
+                            <Button variant="outline" size="sm">
+                              <Search className="h-4 w-4 mr-2" />
+                              View Results
+                            </Button>
+                          </Link>
                           <Button
                             onClick={() => runResearch(person.id)}
                             disabled={researchProgress?.status === 'in_progress'}
