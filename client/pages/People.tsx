@@ -161,8 +161,8 @@ export default function People() {
                 <div className="col-span-3">Person</div>
                 <div className="col-span-3">Company</div>
                 <div className="col-span-2">Contact</div>
-                <div className="col-span-2">Status</div>
-                <div className="col-span-2">Actions</div>
+                <div className="col-span-1">Status</div>
+                <div className="col-span-3">Actions</div>
               </div>
 
               {/* Desktop Table Body / Mobile Card Layout */}
