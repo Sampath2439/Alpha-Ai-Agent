@@ -173,41 +173,41 @@ export default function People() {
                     <div className="hidden lg:grid lg:grid-cols-12 gap-4 items-center py-3 border-b border-gray-100 last:border-b-0">
                       {/* Person */}
                       <div className="col-span-3 flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                        <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
                           <span className="text-sm font-semibold text-gray-600">
                             {getPersonInitial(person.full_name)}
                           </span>
                         </div>
-                        <div>
-                          <p className="font-medium text-gray-900">{person.full_name || 'Unknown'}</p>
-                          <p className="text-sm text-gray-500">{person.title || 'No title'}</p>
+                        <div className="min-w-0">
+                          <p className="font-medium text-gray-900 truncate">{person.full_name || 'Unknown'}</p>
+                          <p className="text-sm text-gray-500 truncate">{person.title || 'No title'}</p>
                         </div>
                       </div>
 
                       {/* Company */}
-                      <div className="col-span-3 flex items-center gap-2">
-                        <Building2 className="w-4 h-4 text-gray-400" />
-                        <div>
-                          <p className="font-medium text-gray-900">{person.company.name || 'Unknown Company'}</p>
-                          <p className="text-sm text-gray-500">{person.company.domain || 'No domain'}</p>
+                      <div className="col-span-3 flex items-center gap-2 min-w-0">
+                        <Building2 className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                        <div className="min-w-0">
+                          <p className="font-medium text-gray-900 truncate">{person.company.name || 'Unknown Company'}</p>
+                          <p className="text-sm text-gray-500 truncate">{person.company.domain || 'No domain'}</p>
                         </div>
                       </div>
 
                       {/* Contact */}
-                      <div className="col-span-2">
+                      <div className="col-span-2 min-w-0">
                         <div className="flex items-center gap-2">
-                          <Mail className="w-4 h-4 text-gray-400" />
+                          <Mail className="w-4 h-4 text-gray-400 flex-shrink-0" />
                           <span className="text-sm text-gray-600 truncate">{person.email || 'No email'}</span>
                         </div>
                       </div>
 
                       {/* Status */}
-                      <div className="col-span-2">
+                      <div className="col-span-1">
                         {getStatusBadge(person.id)}
                       </div>
 
                       {/* Actions */}
-                      <div className="col-span-2 flex items-center gap-1 overflow-hidden">
+                      <div className="col-span-3 flex items-center gap-2">
                         <Link to={`/research/${person.id}`}>
                           <Button variant="outline" size="sm" className="text-xs whitespace-nowrap">
                             <Eye className="w-3 h-3 mr-1" />
