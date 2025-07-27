@@ -176,7 +176,7 @@ export default function Index() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-slate-900">
-                {Array.from(researchJobs.values()).filter(job => job.status === 'in_progress').length}
+                {getAllJobs().filter(job => job.status === 'in_progress').length}
               </div>
             </CardContent>
           </Card>
