@@ -201,8 +201,8 @@ export default function People() {
 
                       {/* Contact */}
                       <div className="col-span-2 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <Mail className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                        <div className="flex items-center gap-3">
+                          <Mail className="w-5 h-5 text-gray-400 flex-shrink-0" />
                           <span className="text-sm text-gray-600 truncate">{person.email || 'No email'}</span>
                         </div>
                       </div>
