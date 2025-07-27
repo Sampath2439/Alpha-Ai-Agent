@@ -1,10 +1,11 @@
 import { RequestHandler } from "express";
 import { db } from "../database";
-import { 
-  PeopleListResponse, 
-  CompanySnippetsResponse, 
+import { jobQueue } from "../job-queue";
+import {
+  PeopleListResponse,
+  CompanySnippetsResponse,
   HealthResponse,
-  EnrichPersonResponse 
+  EnrichPersonResponse
 } from "@shared/api";
 
 // Health check
