@@ -10,7 +10,9 @@ import {
   handleGetCompanySnippets,
   handleGetPersonSnippets,
   handleGetPerson,
-  handleEnrichPerson
+  handleEnrichPerson,
+  handleGetJobStatus,
+  handleGetJobs
 } from "./routes/api";
 
 export function createServer() {
