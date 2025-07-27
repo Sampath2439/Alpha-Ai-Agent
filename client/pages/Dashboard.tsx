@@ -103,26 +103,28 @@ export default function Dashboard() {
     <Layout>
       <div className="flex-1 overflow-auto">
         {/* Header */}
-        <div className="bg-white border-b border-gray-200 px-6 py-4">
-          <div className="flex items-center justify-between">
+        <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-semibold text-gray-900">Research Dashboard</h1>
-              <p className="text-gray-600">AI-powered deep research and competitive intelligence</p>
+              <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">Research Dashboard</h1>
+              <p className="text-sm sm:text-base text-gray-600">AI-powered deep research and competitive intelligence</p>
             </div>
-            <div className="flex items-center gap-3">
-              <Link to="/people">
-                <Button className="bg-blue-600 hover:bg-blue-700">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
+              <Link to="/people" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700">
                   <Users className="w-4 h-4 mr-2" />
-                  Manage People
+                  <span className="hidden sm:inline">Manage People</span>
+                  <span className="sm:hidden">People</span>
                 </Button>
               </Link>
-              <Link to="/research-results">
-                <Button variant="outline">
+              <Link to="/research-results" className="w-full sm:w-auto">
+                <Button variant="outline" className="w-full sm:w-auto">
                   <Search className="w-4 h-4 mr-2" />
-                  View Results
+                  <span className="hidden sm:inline">View Results</span>
+                  <span className="sm:hidden">Results</span>
                 </Button>
               </Link>
-              <Button variant="outline" className="text-green-700 border-green-200 hover:bg-green-50">
+              <Button variant="outline" className="w-full sm:w-auto text-green-700 border-green-200 hover:bg-green-50 hidden lg:flex">
                 <Target className="w-4 h-4 mr-2" />
                 Add Research Target
               </Button>
