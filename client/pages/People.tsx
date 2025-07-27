@@ -36,10 +36,16 @@ export default function People() {
   const loadPeople = async () => {
     try {
       const response = await fetch('/api/people');
-      const data = await response.json();
-      setPeople(data.people || []);
+      if (response.ok) {
+        const data = await response.json();
+        setPeople(data.people || []);
+      } else {
+        console.warn('People API returned:', response.status, response.statusText);
+        setPeople([]); // Set empty array as fallback
+      }
     } catch (error) {
       console.error('Failed to load people:', error);
+      setPeople([]); // Set empty array as fallback
     } finally {
       setLoading(false);
     }
