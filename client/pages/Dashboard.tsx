@@ -86,7 +86,14 @@ export default function Dashboard() {
           const person = people.find(p => p.id === job.person_id);
           return { ...job, person };
         })
-    : []; // Empty array when no jobs
+    : people.length > 0
+      ? people.slice(0, 2).map((person, index) => ({
+          job_id: `mock_${index}`,
+          person_id: person.id,
+          status: index === 0 ? 'completed' : 'in_progress',
+          person: person
+        }))
+      : []; // Empty array when no data
 
   if (loading) {
     return (
