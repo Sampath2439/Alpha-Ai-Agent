@@ -42,6 +42,8 @@ export function createServer() {
   app.get("/api/snippets/company/:company_id", handleGetCompanySnippets);
   app.get("/api/snippets/person/:person_id", handleGetPersonSnippets);
   app.post("/api/enrich/:person_id", handleEnrichPerson);
+  app.get("/api/jobs/:job_id", handleGetJobStatus);
+  app.get("/api/jobs", handleGetJobs);
 
   return app;
 }
