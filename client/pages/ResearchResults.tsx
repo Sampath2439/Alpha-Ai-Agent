@@ -70,36 +70,40 @@ export default function ResearchResults() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-slate-600">Loading research results...</p>
+      <Layout>
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading research results...</p>
+          </div>
         </div>
-      </div>
+      </Layout>
     );
   }
 
   if (!person) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-slate-600 mb-4">Person not found</p>
-          <Link to="/">
-            <Button variant="outline">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Dashboard
-            </Button>
-          </Link>
+      <Layout>
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <p className="text-gray-600 mb-4">Person not found</p>
+            <Link to="/">
+              <Button variant="outline">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to Dashboard
+              </Button>
+            </Link>
+          </div>
         </div>
-      </div>
+      </Layout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50">
-        <div className="container mx-auto px-6 py-4">
+    <Layout>
+      <div className="flex-1 overflow-auto">
+        {/* Header */}
+        <div className="bg-white border-b border-gray-200 px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link to="/">
@@ -109,8 +113,8 @@ export default function ResearchResults() {
                 </Button>
               </Link>
               <div>
-                <h1 className="text-xl font-bold text-slate-900">Research Results</h1>
-                <p className="text-sm text-slate-600">{person.full_name} • {person.company.name}</p>
+                <h1 className="text-xl font-bold text-gray-900">Research Results</h1>
+                <p className="text-sm text-gray-600">{person.full_name} • {person.company.name}</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -121,9 +125,8 @@ export default function ResearchResults() {
             </div>
           </div>
         </div>
-      </header>
 
-      <div className="container mx-auto px-6 py-8">
+        <div className="p-6">
         {/* Person & Company Overview */}
         <Card className="mb-8 bg-white/80 backdrop-blur-sm border-slate-200">
           <CardHeader>
@@ -330,7 +333,8 @@ export default function ResearchResults() {
             </CardContent>
           </Card>
         )}
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 }
