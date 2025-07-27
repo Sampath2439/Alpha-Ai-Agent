@@ -131,11 +131,11 @@ export default function People() {
           </div>
         </div>
 
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           {/* Search and Filter */}
-          <div className="mb-6">
-            <div className="flex items-center gap-4">
-              <div className="flex-1 max-w-md">
+          <div className="mb-4 sm:mb-6">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+              <div className="flex-1 max-w-full sm:max-w-md">
                 <Input
                   placeholder="Search people, companies, or emails..."
                   value={searchTerm}
@@ -143,7 +143,7 @@ export default function People() {
                   className="w-full"
                 />
               </div>
-              <span className="text-sm text-gray-500">{filteredPeople.length} people</span>
+              <span className="text-xs sm:text-sm text-gray-500 self-center">{filteredPeople.length} people</span>
             </div>
           </div>
 
