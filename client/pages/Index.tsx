@@ -27,7 +27,7 @@ export default function Index() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
-  const [researchJobs, setResearchJobs] = useState<Map<string, ResearchProgress>>(new Map());
+  const { isConnected, getJobProgress, getAllJobs } = useProgressStream();
 
   useEffect(() => {
     loadData();
