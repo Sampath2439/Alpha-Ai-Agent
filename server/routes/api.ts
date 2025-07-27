@@ -83,10 +83,10 @@ export const handleGetPerson: RequestHandler = (req, res) => {
   res.json({ ...person, company });
 };
 
-// Enrich person endpoint (will be enhanced with research agent)
+// Enrich person endpoint with async job processing
 export const handleEnrichPerson: RequestHandler = (req, res) => {
   const { person_id } = req.params;
-  
+
   if (!person_id) {
     return res.status(400).json({ error: 'Person ID is required' });
   }
@@ -96,12 +96,40 @@ export const handleEnrichPerson: RequestHandler = (req, res) => {
     return res.status(404).json({ error: 'Person not found' });
   }
 
-  // TODO: Implement async job queue processing
-  const response: EnrichPersonResponse = {
-    job_id: `job_${Date.now()}`,
-    status: 'queued',
-    message: 'Research job queued successfully'
-  };
+  try {
+    const jobId = jobQueue.enqueueJob(person_id);
 
-  res.json(response);
+    const response: EnrichPersonResponse = {
+      job_id: jobId,
+      status: 'queued',
+      message: 'Research job queued successfully'
+    };
+
+    res.json(response);
+  } catch (error) {
+    console.error('Failed to enqueue job:', error);
+    res.status(500).json({ error: 'Failed to queue research job' });
+  }
+};
+
+// Get job status
+export const handleGetJobStatus: RequestHandler = (req, res) => {
+  const { job_id } = req.params;
+
+  if (!job_id) {
+    return res.status(400).json({ error: 'Job ID is required' });
+  }
+
+  const job = jobQueue.getJob(job_id);
+  if (!job) {
+    return res.status(404).json({ error: 'Job not found' });
+  }
+
+  res.json(job.progress);
+};
+
+// Get all jobs
+export const handleGetJobs: RequestHandler = (req, res) => {
+  const jobs = jobQueue.getAllJobs();
+  res.json(jobs);
 };
