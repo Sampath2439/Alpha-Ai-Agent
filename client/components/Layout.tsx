@@ -107,11 +107,18 @@ export default function Layout({ children }: LayoutProps) {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 min-w-0">
-                    <Activity className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    <Activity className={`w-4 h-4 flex-shrink-0 ${isConnected ? 'text-green-500' : 'text-yellow-500'}`} />
                     <span className="text-sm text-gray-600 truncate">Agent Status</span>
                   </div>
-                  <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 text-xs flex-shrink-0">
-                    Ready
+                  <Badge
+                    variant="outline"
+                    className={`text-xs flex-shrink-0 ${
+                      isConnected
+                        ? 'bg-green-50 text-green-700 border-green-200'
+                        : 'bg-yellow-50 text-yellow-700 border-yellow-200'
+                    }`}
+                  >
+                    {isConnected ? 'Real-time' : 'Ready'}
                   </Badge>
                 </div>
                 <div className="flex items-center justify-between">
