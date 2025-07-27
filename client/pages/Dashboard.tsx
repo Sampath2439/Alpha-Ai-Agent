@@ -255,16 +255,16 @@ export default function Dashboard() {
             </Card>
           </div>
 
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8">
             {/* Recent Activity */}
             <Card className="bg-white border border-gray-200">
-              <CardHeader className="pb-3 px-4 sm:px-6">
+              <CardHeader className="pb-4 px-6 lg:px-8">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-base sm:text-lg font-semibold text-gray-900">Recent Activity</CardTitle>
-                  <span className="text-xs sm:text-sm text-gray-500">{recentActivity.length} items</span>
+                  <CardTitle className="text-lg lg:text-xl font-semibold text-gray-900">Recent Activity</CardTitle>
+                  <span className="text-sm text-gray-500">{recentActivity.length} items</span>
                 </div>
               </CardHeader>
-              <CardContent className="px-4 sm:px-6 space-y-3 sm:space-y-4">
+              <CardContent className="px-6 lg:px-8 space-y-4 lg:space-y-5">
                 {recentActivity.length > 0 ? (
                   recentActivity.map((activity, index) => (
                     <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
