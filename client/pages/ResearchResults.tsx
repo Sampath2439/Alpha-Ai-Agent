@@ -127,35 +127,35 @@ export default function ResearchResults() {
           </div>
         </div>
 
-        <div className="p-6">
-        {/* Person & Company Overview */}
-        <Card className="mb-8 bg-white/80 backdrop-blur-sm border-slate-200">
-          <CardHeader>
-            <div className="flex items-start justify-between">
-              <div className="flex items-center gap-4">
-                <div className="h-16 w-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center">
-                  <span className="text-xl font-bold text-blue-700">
-                    {person.full_name?.charAt(0) || 'U'}
-                  </span>
-                </div>
-                <div>
-                  <CardTitle className="text-2xl">{person.full_name}</CardTitle>
-                  <CardDescription className="text-lg">{person.title}</CardDescription>
-                  <div className="flex items-center gap-2 mt-2">
-                    <Badge variant="outline">{person.email}</Badge>
-                    <Badge variant="secondary">{person.company.name}</Badge>
+        <div className="p-4 sm:p-6">
+          {/* Person & Company Overview */}
+          <Card className="mb-6 sm:mb-8 bg-white border-gray-200">
+            <CardHeader className="px-4 sm:px-6">
+              <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="h-12 w-12 sm:h-16 sm:w-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-lg sm:text-xl font-bold text-blue-700">
+                      {person.full_name?.charAt(0) || 'U'}
+                    </span>
+                  </div>
+                  <div className="min-w-0">
+                    <CardTitle className="text-lg sm:text-2xl truncate">{person.full_name}</CardTitle>
+                    <CardDescription className="text-sm sm:text-lg truncate">{person.title}</CardDescription>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-2">
+                      <Badge variant="outline" className="text-xs truncate">{person.email}</Badge>
+                      <Badge variant="secondary" className="text-xs truncate">{person.company.name}</Badge>
+                    </div>
                   </div>
                 </div>
+                <div className="text-left lg:text-right flex-shrink-0">
+                  <p className="text-xs sm:text-sm text-gray-600">Research Status</p>
+                  <Badge variant={snippets.length > 0 ? 'default' : 'secondary'} className="mt-1 text-xs">
+                    {snippets.length > 0 ? 'Completed' : 'Not Started'}
+                  </Badge>
+                </div>
               </div>
-              <div className="text-right">
-                <p className="text-sm text-slate-600">Research Status</p>
-                <Badge variant={snippets.length > 0 ? 'default' : 'secondary'} className="mt-1">
-                  {snippets.length > 0 ? 'Completed' : 'Not Started'}
-                </Badge>
-              </div>
-            </div>
-          </CardHeader>
-        </Card>
+            </CardHeader>
+          </Card>
 
         {/* Research Results */}
         {researchData ? (
