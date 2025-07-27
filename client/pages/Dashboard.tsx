@@ -190,66 +190,66 @@ export default function Dashboard() {
             </Card>
 
             <Card className="bg-white border border-gray-200">
-              <CardContent className="p-3 sm:p-4">
+              <CardContent className="p-4 lg:p-6">
                 <div className="flex items-center justify-between">
                   <div className="min-w-0">
                     <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Companies Tracked</p>
                     <p className="text-xl sm:text-2xl font-bold text-gray-900">{companies.length}</p>
                     <p className="text-xs text-gray-500">Across all campaigns</p>
                   </div>
-                  <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
+                  <Building2 className="w-5 h-5 lg:w-6 lg:h-6 text-green-500 flex-shrink-0" />
                 </div>
               </CardContent>
             </Card>
 
             <Card className="bg-white border border-gray-200">
-              <CardContent className="p-3 sm:p-4">
+              <CardContent className="p-4 lg:p-6">
                 <div className="flex items-center justify-between">
                   <div className="min-w-0">
                     <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Research Targets</p>
                     <p className="text-xl sm:text-2xl font-bold text-gray-900">{people.length}</p>
                     <p className="text-xs text-gray-500">People to research</p>
                   </div>
-                  <Users className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500 flex-shrink-0" />
+                  <Users className="w-5 h-5 lg:w-6 lg:h-6 text-purple-500 flex-shrink-0" />
                 </div>
               </CardContent>
             </Card>
 
             <Card className="bg-white border border-gray-200">
-              <CardContent className="p-3 sm:p-4">
+              <CardContent className="p-4 lg:p-6">
                 <div className="flex items-center justify-between">
                   <div className="min-w-0">
                     <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Completed Research</p>
                     <p className="text-xl sm:text-2xl font-bold text-gray-900">{completedJobs}</p>
                     <p className="text-xs text-gray-500">{inProgressJobs} in progress</p>
                   </div>
-                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
+                  <CheckCircle className="w-5 h-5 lg:w-6 lg:h-6 text-green-500 flex-shrink-0" />
                 </div>
               </CardContent>
             </Card>
 
             <Card className="bg-white border border-gray-200">
-              <CardContent className="p-3 sm:p-4">
+              <CardContent className="p-4 lg:p-6">
                 <div className="flex items-center justify-between">
                   <div className="min-w-0">
                     <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Success Rate</p>
                     <p className="text-xl sm:text-2xl font-bold text-gray-900">100%</p>
                     <p className="text-xs text-gray-500">Research completion</p>
                   </div>
-                  <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 flex-shrink-0" />
+                  <TrendingUp className="w-5 h-5 lg:w-6 lg:h-6 text-blue-500 flex-shrink-0" />
                 </div>
               </CardContent>
             </Card>
 
             <Card className="bg-white border border-gray-200">
-              <CardContent className="p-3 sm:p-4">
+              <CardContent className="p-4 lg:p-6">
                 <div className="flex items-center justify-between">
                   <div className="min-w-0">
                     <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Avg. Research Time</p>
                     <p className="text-xl sm:text-2xl font-bold text-gray-900">2.3m</p>
                     <p className="text-xs text-gray-500">Per target</p>
                   </div>
-                  <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500 flex-shrink-0" />
+                  <Clock className="w-5 h-5 lg:w-6 lg:h-6 text-orange-500 flex-shrink-0" />
                 </div>
               </CardContent>
             </Card>
