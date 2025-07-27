@@ -25,30 +25,34 @@ export function useProgressStream() {
       const eventSource = new EventSource('/api/progress-stream');
       eventSourceRef.current = eventSource;
 
+      let connectionTimeout = setTimeout(() => {
+        console.warn('SSE connection timeout - operating without real-time updates');
+        setIsConnected(false);
+        if (eventSourceRef.current) {
+          eventSourceRef.current.close();
+          eventSourceRef.current = null;
+        }
+      }, 10000);
+
       eventSource.onopen = () => {
         console.log('SSE connection opened');
         setIsConnected(true);
+        clearTimeout(connectionTimeout);
       };
 
       eventSource.onerror = (error) => {
-        console.warn('SSE connection error, will retry in 5 seconds:', error);
+        console.warn('SSE connection failed - operating without real-time updates');
         setIsConnected(false);
-        
+        clearTimeout(connectionTimeout);
+
         // Close the current connection
         if (eventSourceRef.current) {
           eventSourceRef.current.close();
           eventSourceRef.current = null;
         }
 
-        // Retry connection after 5 seconds
-        if (reconnectTimeoutRef.current) {
-          clearTimeout(reconnectTimeoutRef.current);
-        }
-        
-        reconnectTimeoutRef.current = setTimeout(() => {
-          console.log('Retrying SSE connection...');
-          connectToSSE();
-        }, 5000);
+        // Don't retry automatically to avoid spamming failed connections
+        // The app will work without real-time updates
       };
 
       eventSource.onmessage = (event) => {
