@@ -86,18 +86,8 @@ export function useProgressStream() {
       };
 
     } catch (error) {
-      console.error('Failed to create SSE connection:', error);
+      console.warn('Failed to create SSE connection - operating without real-time updates:', error);
       setIsConnected(false);
-      
-      // Retry after 10 seconds if initial connection fails
-      if (reconnectTimeoutRef.current) {
-        clearTimeout(reconnectTimeoutRef.current);
-      }
-      
-      reconnectTimeoutRef.current = setTimeout(() => {
-        console.log('Retrying SSE connection after connection failure...');
-        connectToSSE();
-      }, 10000);
     }
   };
 
