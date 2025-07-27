@@ -207,9 +207,9 @@ export default function People() {
                       </div>
 
                       {/* Actions */}
-                      <div className="col-span-2 flex items-center gap-2">
+                      <div className="col-span-2 flex items-center gap-1 overflow-hidden">
                         <Link to={`/research/${person.id}`}>
-                          <Button variant="outline" size="sm" className="text-xs">
+                          <Button variant="outline" size="sm" className="text-xs whitespace-nowrap">
                             <Eye className="w-3 h-3 mr-1" />
                             View
                           </Button>
@@ -218,12 +218,12 @@ export default function People() {
                           size="sm"
                           onClick={() => runResearch(person.id)}
                           disabled={getJobProgress(person.id)?.status === 'in_progress'}
-                          className="bg-blue-600 hover:bg-blue-700 text-xs"
+                          className="bg-blue-600 hover:bg-blue-700 text-xs whitespace-nowrap"
                         >
                           <Play className="w-3 h-3 mr-1" />
                           {getJobProgress(person.id)?.status === 'in_progress' ? 'Running...' : 'Research'}
                         </Button>
-                        <Button variant="outline" size="sm" className="text-xs text-red-600 hover:text-red-700">
+                        <Button variant="outline" size="sm" className="text-xs text-red-600 hover:text-red-700 p-2">
                           <Trash2 className="w-3 h-3" />
                         </Button>
                       </div>
