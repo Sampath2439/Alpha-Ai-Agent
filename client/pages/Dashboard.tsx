@@ -258,47 +258,47 @@ export default function Dashboard() {
             </Card>
 
             {/* System Status & Research Progress */}
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               <Card className="bg-white border border-gray-200">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg font-semibold text-gray-900">System Status</CardTitle>
+                <CardHeader className="pb-3 px-4 sm:px-6">
+                  <CardTitle className="text-base sm:text-lg font-semibold text-gray-900">System Status</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="px-4 sm:px-6 space-y-3 sm:space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Agent Status</span>
-                    <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                    <span className="text-xs sm:text-sm text-gray-600">Agent Status</span>
+                    <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 text-xs">
                       Ready
                     </Badge>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Active Research</span>
-                    <span className="text-sm font-medium text-gray-900">{inProgressJobs}</span>
+                    <span className="text-xs sm:text-sm text-gray-600">Active Research</span>
+                    <span className="text-xs sm:text-sm font-medium text-gray-900">{inProgressJobs}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Queue Status</span>
-                    <span className="text-sm font-medium text-gray-900">Empty</span>
+                    <span className="text-xs sm:text-sm text-gray-600">Queue Status</span>
+                    <span className="text-xs sm:text-sm font-medium text-gray-900">Empty</span>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="bg-white border border-gray-200">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg font-semibold text-gray-900">Research Progress</CardTitle>
+                <CardHeader className="pb-3 px-4 sm:px-6">
+                  <CardTitle className="text-base sm:text-lg font-semibold text-gray-900">Research Progress</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="px-4 sm:px-6 space-y-3 sm:space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Completion Rate</span>
-                    <span className="text-sm font-medium text-gray-900">100%</span>
+                    <span className="text-xs sm:text-sm text-gray-600">Completion Rate</span>
+                    <span className="text-xs sm:text-sm font-medium text-gray-900">100%</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div className="bg-blue-600 h-2 rounded-full" style={{ width: '100%' }}></div>
                   </div>
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div className="flex items-center justify-between">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-4 text-xs sm:text-sm">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                       <span className="text-gray-600">Total People</span>
                       <span className="font-medium text-gray-900">{people.length}</span>
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                       <span className="text-gray-600">Researched</span>
                       <span className="font-medium text-gray-900">{completedJobs}</span>
                     </div>
