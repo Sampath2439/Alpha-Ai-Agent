@@ -136,14 +136,14 @@ export default function Dashboard() {
           {/* Stats Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
             <Card className="bg-white border border-gray-200">
-              <CardContent className="p-4">
+              <CardContent className="p-3 sm:p-4">
                 <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Active Campaigns</p>
-                    <p className="text-2xl font-bold text-gray-900">{campaigns.filter(c => c.status === 'active').length}</p>
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Active Campaigns</p>
+                    <p className="text-xl sm:text-2xl font-bold text-gray-900">{campaigns.filter(c => c.status === 'active').length}</p>
                     <p className="text-xs text-gray-500">1 total campaigns</p>
                   </div>
-                  <TrendingUp className="w-5 h-5 text-blue-500" />
+                  <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 flex-shrink-0" />
                 </div>
               </CardContent>
             </Card>
