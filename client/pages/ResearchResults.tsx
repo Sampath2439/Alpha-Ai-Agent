@@ -171,8 +171,8 @@ export default function ResearchResults() {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="overview" className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <TabsContent value="overview" className="space-y-4 sm:space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {/* Company Value Proposition */}
                 <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
                   <CardHeader>
