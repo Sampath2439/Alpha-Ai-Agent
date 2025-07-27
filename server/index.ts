@@ -14,6 +14,7 @@ import {
   handleGetJobStatus,
   handleGetJobs
 } from "./routes/api";
+import { handleProgressStream } from "./routes/sse";
 
 export function createServer() {
   const app = express();
