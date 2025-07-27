@@ -60,56 +60,13 @@ export default function Index() {
       const response = await fetch(`/api/enrich/${personId}`, {
         method: 'POST',
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to start research');
       }
 
       const data = await response.json();
-      
-      // Mock progress updates (in real app would use WebSocket)
-      const mockProgress: ResearchProgress = {
-        job_id: data.job_id,
-        person_id: personId,
-        status: 'in_progress',
-        current_iteration: 1,
-        max_iterations: 3,
-        current_query: 'Starting research...',
-        found_fields: [],
-        missing_fields: ['company_value_prop', 'product_names', 'pricing_model', 'key_competitors', 'company_domain']
-      };
-
-      setResearchJobs(prev => new Map(prev.set(personId, mockProgress)));
-
-      // Simulate progress updates
-      let iteration = 1;
-      const interval = setInterval(() => {
-        if (iteration <= 3) {
-          const updatedProgress: ResearchProgress = {
-            ...mockProgress,
-            current_iteration: iteration,
-            current_query: `Research iteration ${iteration}...`,
-            found_fields: iteration > 1 ? ['company_value_prop'] : [],
-            missing_fields: iteration > 1 ? ['product_names', 'pricing_model', 'key_competitors', 'company_domain'] : mockProgress.missing_fields
-          };
-          
-          setResearchJobs(prev => new Map(prev.set(personId, updatedProgress)));
-          iteration++;
-        } else {
-          // Complete the research
-          const completedProgress: ResearchProgress = {
-            ...mockProgress,
-            status: 'completed',
-            current_iteration: 3,
-            found_fields: ['company_value_prop', 'product_names', 'pricing_model', 'key_competitors', 'company_domain'],
-            missing_fields: []
-          };
-          
-          setResearchJobs(prev => new Map(prev.set(personId, completedProgress)));
-          clearInterval(interval);
-        }
-      }, 2000);
-
+      console.log('Research job queued:', data);
     } catch (error) {
       console.error('Failed to start research:', error);
     }
