@@ -331,10 +331,10 @@ export default function Dashboard() {
               </Card>
 
               <Card className="bg-white border border-gray-200">
-                <CardHeader className="pb-3 px-4 sm:px-6">
-                  <CardTitle className="text-base sm:text-lg font-semibold text-gray-900">Research Progress</CardTitle>
+                <CardHeader className="pb-4 px-6 lg:px-8">
+                  <CardTitle className="text-lg lg:text-xl font-semibold text-gray-900">Research Progress</CardTitle>
                 </CardHeader>
-                <CardContent className="px-4 sm:px-6 space-y-3 sm:space-y-4">
+                <CardContent className="px-6 lg:px-8 space-y-4 lg:space-y-5">
                   <div className="flex items-center justify-between">
                     <span className="text-xs sm:text-sm text-gray-600">Completion Rate</span>
                     <span className="text-xs sm:text-sm font-medium text-gray-900">100%</span>
