@@ -137,15 +137,16 @@ export default function ResearchResultsPage() {
     <Layout>
       <div className="flex-1 overflow-auto">
         {/* Header */}
-        <div className="bg-white border-b border-gray-200 px-6 py-4">
-          <div className="flex items-center justify-between">
+        <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-semibold text-gray-900">Research Results</h1>
-              <p className="text-gray-600">Explore AI-generated competitive intelligence and insights</p>
+              <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">Research Results</h1>
+              <p className="text-sm sm:text-base text-gray-600">Explore AI-generated competitive intelligence and insights</p>
             </div>
-            <Button variant="outline">
+            <Button variant="outline" className="self-start sm:self-auto">
               <RefreshCw className="w-4 h-4 mr-2" />
-              Refresh Results
+              <span className="hidden sm:inline">Refresh Results</span>
+              <span className="sm:hidden">Refresh</span>
             </Button>
           </div>
         </div>
