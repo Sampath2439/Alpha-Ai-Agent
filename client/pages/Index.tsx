@@ -212,7 +212,7 @@ export default function Index() {
               <CardContent>
                 <div className="space-y-4">
                   {people.map((person) => {
-                    const researchProgress = researchJobs.get(person.id);
+                    const researchProgress = getJobProgress(person.id);
                     
                     return (
                       <div key={person.id} className="flex items-center justify-between p-4 border border-slate-200 rounded-lg bg-white/50">
