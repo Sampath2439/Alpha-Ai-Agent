@@ -45,6 +45,7 @@ export function createServer() {
   app.post("/api/enrich/:person_id", handleEnrichPerson);
   app.get("/api/jobs/:job_id", handleGetJobStatus);
   app.get("/api/jobs", handleGetJobs);
+  app.get("/api/progress-stream", handleProgressStream);
 
   return app;
 }
