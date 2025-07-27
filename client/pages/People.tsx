@@ -107,22 +107,23 @@ export default function People() {
     <Layout>
       <div className="flex-1 overflow-auto">
         {/* Header */}
-        <div className="bg-white border-b border-gray-200 px-6 py-4">
-          <div className="flex items-center justify-between">
+        <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-4">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-semibold text-gray-900">People Management</h1>
-              <p className="text-gray-600">Manage research targets and run deep intelligence gathering</p>
+              <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">People Management</h1>
+              <p className="text-sm sm:text-base text-gray-600">Manage research targets and run deep intelligence gathering</p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
               <Button variant="outline" className="text-purple-700 border-purple-200 hover:bg-purple-50">
                 <Upload className="w-4 h-4 mr-2" />
-                Import CSV/Excel
+                <span className="hidden sm:inline">Import CSV/Excel</span>
+                <span className="sm:hidden">Import</span>
               </Button>
               <Button className="bg-green-600 hover:bg-green-700">
                 <Plus className="w-4 h-4 mr-2" />
                 Add Person
               </Button>
-              <Button variant="outline">
+              <Button variant="outline" className="hidden lg:flex">
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Refresh Data
               </Button>
