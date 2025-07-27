@@ -222,40 +222,48 @@ export default function Dashboard() {
               <CardHeader className="pb-3 px-4 sm:px-6">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-base sm:text-lg font-semibold text-gray-900">Recent Activity</CardTitle>
-                  <span className="text-xs sm:text-sm text-gray-500">4 items</span>
+                  <span className="text-xs sm:text-sm text-gray-500">{recentActivity.length} items</span>
                 </div>
               </CardHeader>
               <CardContent className="px-4 sm:px-6 space-y-3 sm:space-y-4">
-                {recentActivity.map((activity, index) => (
-                  <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
-                    {getCompanyIcon(activity.person?.company?.name || 'Unknown')}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">{activity.person?.company?.name || 'Unknown Company'}</p>
-                      <p className="text-xs text-gray-500 truncate">
-                        Research target: {activity.person?.full_name || 'Unknown'} • Jul 25, 2025
-                      </p>
+                {recentActivity.length > 0 ? (
+                  recentActivity.map((activity, index) => (
+                    <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
+                      {getCompanyIcon(activity.person?.company?.name || 'Unknown')}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">{activity.person?.company?.name || 'Unknown Company'}</p>
+                        <p className="text-xs text-gray-500 truncate">
+                          Research target: {activity.person?.full_name || 'Unknown'} • Jul 25, 2025
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+                        {getStatusIcon(activity.status)}
+                        <Badge
+                          variant={activity.status === 'completed' ? 'default' : activity.status === 'in_progress' ? 'secondary' : 'outline'}
+                          className={`text-xs ${
+                            activity.status === 'completed' ? 'bg-green-100 text-green-800 border-green-200' :
+                            activity.status === 'in_progress' ? 'bg-blue-100 text-blue-800 border-blue-200' : ''
+                          }`}
+                        >
+                          <span className="hidden sm:inline">
+                            {activity.status === 'completed' ? 'Completed' :
+                             activity.status === 'in_progress' ? 'In progress' : 'Queued'}
+                          </span>
+                          <span className="sm:hidden">
+                            {activity.status === 'completed' ? 'Done' :
+                             activity.status === 'in_progress' ? 'Active' : 'Queue'}
+                          </span>
+                        </Badge>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-                      {getStatusIcon(activity.status)}
-                      <Badge
-                        variant={activity.status === 'completed' ? 'default' : activity.status === 'in_progress' ? 'secondary' : 'outline'}
-                        className={`text-xs ${
-                          activity.status === 'completed' ? 'bg-green-100 text-green-800 border-green-200' :
-                          activity.status === 'in_progress' ? 'bg-blue-100 text-blue-800 border-blue-200' : ''
-                        }`}
-                      >
-                        <span className="hidden sm:inline">
-                          {activity.status === 'completed' ? 'Completed' :
-                           activity.status === 'in_progress' ? 'In progress' : 'Queued'}
-                        </span>
-                        <span className="sm:hidden">
-                          {activity.status === 'completed' ? 'Done' :
-                           activity.status === 'in_progress' ? 'Active' : 'Queue'}
-                        </span>
-                      </Badge>
-                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-8">
+                    <Activity className="w-8 h-8 text-gray-400 mx-auto mb-3" />
+                    <p className="text-sm text-gray-500 mb-1">No recent activity</p>
+                    <p className="text-xs text-gray-400">Start a research job to see activity here</p>
                   </div>
-                ))}
+                )}
               </CardContent>
             </Card>
 
