@@ -172,11 +172,11 @@ export default function People() {
               </div>
 
               {/* Desktop Table Body / Mobile Card Layout */}
-              <div className="space-y-4 mt-4">
+              <div className="space-y-4 mt-6">
                 {filteredPeople.map((person) => (
                   <div key={person.id}>
                     {/* Desktop Layout */}
-                    <div className="hidden lg:grid lg:grid-cols-12 gap-4 items-center py-3 border-b border-gray-100 last:border-b-0">
+                    <div className="hidden lg:grid lg:grid-cols-12 gap-6 items-center py-4 lg:py-5 border-b border-gray-100 last:border-b-0">
                       {/* Person */}
                       <div className="col-span-3 flex items-center gap-3">
                         <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
