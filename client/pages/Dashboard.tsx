@@ -78,13 +78,15 @@ export default function Dashboard() {
     }
   };
 
-  const recentActivity = allJobs
-    .sort((a, b) => b.job_id.localeCompare(a.job_id))
-    .slice(0, 4)
-    .map(job => {
-      const person = people.find(p => p.id === job.person_id);
-      return { ...job, person };
-    });
+  const recentActivity = allJobs.length > 0
+    ? allJobs
+        .sort((a, b) => b.job_id.localeCompare(a.job_id))
+        .slice(0, 4)
+        .map(job => {
+          const person = people.find(p => p.id === job.person_id);
+          return { ...job, person };
+        })
+    : []; // Empty array when no jobs
 
   if (loading) {
     return (
