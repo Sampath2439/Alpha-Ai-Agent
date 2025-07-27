@@ -155,13 +155,13 @@ export default function People() {
 
           {/* Research Targets */}
           <Card className="bg-white border border-gray-200">
-            <CardHeader className="px-4 sm:px-6">
-              <CardTitle className="flex items-center gap-2 text-base sm:text-lg font-semibold text-gray-900">
-                <Users className="w-4 h-4 sm:w-5 sm:h-5" />
+            <CardHeader className="px-6 lg:px-8 py-6">
+              <CardTitle className="flex items-center gap-2 text-lg lg:text-xl font-semibold text-gray-900">
+                <Users className="w-5 h-5 lg:w-6 lg:h-6" />
                 Research Targets
               </CardTitle>
             </CardHeader>
-            <CardContent className="px-4 sm:px-6">
+            <CardContent className="px-6 lg:px-8 pb-6">
               {/* Desktop Table Header - Hidden on mobile */}
               <div className="hidden lg:grid lg:grid-cols-12 gap-4 pb-3 border-b border-gray-200 text-sm font-medium text-gray-500">
                 <div className="col-span-3">Person</div>
