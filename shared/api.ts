@@ -2,7 +2,7 @@
 export interface Campaign {
   id: string;
   name: string;
-  status: 'draft' | 'active' | 'completed';
+  status: "draft" | "active" | "completed";
   created_at: string;
 }
 
@@ -25,7 +25,7 @@ export interface Person {
 
 export interface ContextSnippet {
   id: string;
-  entity_type: 'company' | 'person';
+  entity_type: "company" | "person";
   entity_id: string;
   snippet_type: string;
   payload: ResearchPayload;
@@ -68,14 +68,14 @@ export interface EnrichPersonRequest {
 
 export interface EnrichPersonResponse {
   job_id: string;
-  status: 'queued' | 'in_progress' | 'completed' | 'failed';
+  status: "queued" | "in_progress" | "completed" | "failed";
   message: string;
 }
 
 export interface ResearchProgress {
   job_id: string;
   person_id: string;
-  status: 'queued' | 'in_progress' | 'completed' | 'failed';
+  status: "queued" | "in_progress" | "completed" | "failed";
   current_iteration: number;
   max_iterations: number;
   current_query?: string;
@@ -94,6 +94,6 @@ export interface CompanySnippetsResponse {
 }
 
 export interface HealthResponse {
-  status: 'ok';
+  status: "ok";
   timestamp: string;
 }

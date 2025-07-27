@@ -1,22 +1,34 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { useProgressStream } from '@/hooks/useProgressStream';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Users, 
-  Building2, 
-  PlayCircle, 
-  CheckCircle, 
-  Clock, 
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { useProgressStream } from "@/hooks/useProgressStream";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Users,
+  Building2,
+  PlayCircle,
+  CheckCircle,
+  Clock,
   AlertCircle,
   Search,
   Database,
-  Activity
-} from 'lucide-react';
-import { Person, Company, Campaign, ContextSnippet, ResearchProgress } from '@shared/api';
+  Activity,
+} from "lucide-react";
+import {
+  Person,
+  Company,
+  Campaign,
+  ContextSnippet,
+  ResearchProgress,
+} from "@shared/api";
 
 interface PersonWithCompany extends Person {
   company: Company;
@@ -36,9 +48,9 @@ export default function Index() {
   const loadData = async () => {
     try {
       const [peopleRes, campaignsRes, companiesRes] = await Promise.all([
-        fetch('/api/people'),
-        fetch('/api/campaigns'),
-        fetch('/api/companies')
+        fetch("/api/people"),
+        fetch("/api/campaigns"),
+        fetch("/api/companies"),
       ]);
 
       const peopleData = await peopleRes.json();
@@ -49,7 +61,7 @@ export default function Index() {
       setCampaigns(campaignsData || []);
       setCompanies(companiesData || []);
     } catch (error) {
-      console.error('Failed to load data:', error);
+      console.error("Failed to load data:", error);
     } finally {
       setLoading(false);
     }
@@ -58,27 +70,27 @@ export default function Index() {
   const runResearch = async (personId: string) => {
     try {
       const response = await fetch(`/api/enrich/${personId}`, {
-        method: 'POST',
+        method: "POST",
       });
 
       if (!response.ok) {
-        throw new Error('Failed to start research');
+        throw new Error("Failed to start research");
       }
 
       const data = await response.json();
-      console.log('Research job queued:', data);
+      console.log("Research job queued:", data);
     } catch (error) {
-      console.error('Failed to start research:', error);
+      console.error("Failed to start research:", error);
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'completed':
+      case "completed":
         return <CheckCircle className="h-4 w-4 text-green-500" />;
-      case 'in_progress':
+      case "in_progress":
         return <Clock className="h-4 w-4 text-blue-500" />;
-      case 'failed':
+      case "failed":
         return <AlertCircle className="h-4 w-4 text-red-500" />;
       default:
         return <Clock className="h-4 w-4 text-gray-400" />;
@@ -86,16 +98,19 @@ export default function Index() {
   };
 
   const getStatusBadge = (status: string) => {
-    const variants: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
-      'completed': 'default',
-      'in_progress': 'secondary',
-      'failed': 'destructive',
-      'queued': 'outline'
+    const variants: Record<
+      string,
+      "default" | "secondary" | "destructive" | "outline"
+    > = {
+      completed: "default",
+      in_progress: "secondary",
+      failed: "destructive",
+      queued: "outline",
     };
-    
+
     return (
-      <Badge variant={variants[status] || 'outline'}>
-        {status.replace('_', ' ')}
+      <Badge variant={variants[status] || "outline"}>
+        {status.replace("_", " ")}
       </Badge>
     );
   };
@@ -122,17 +137,25 @@ export default function Index() {
                 <Database className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-slate-900">Alpha Platform</h1>
-                <p className="text-sm text-slate-600">Deep Research Intelligence</p>
+                <h1 className="text-2xl font-bold text-slate-900">
+                  Alpha Platform
+                </h1>
+                <p className="text-sm text-slate-600">
+                  Deep Research Intelligence
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <Badge
                 variant="outline"
-                className={isConnected ? "bg-green-50 text-green-700 border-green-200" : "bg-yellow-50 text-yellow-700 border-yellow-200"}
+                className={
+                  isConnected
+                    ? "bg-green-50 text-green-700 border-green-200"
+                    : "bg-yellow-50 text-yellow-700 border-yellow-200"
+                }
               >
                 <Activity className="h-3 w-3 mr-1" />
-                {isConnected ? 'Real-time Connected' : 'Connecting...'}
+                {isConnected ? "Real-time Connected" : "Connecting..."}
               </Badge>
             </div>
           </div>
@@ -144,42 +167,59 @@ export default function Index() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600">Total Campaigns</CardTitle>
+              <CardTitle className="text-sm font-medium text-slate-600">
+                Total Campaigns
+              </CardTitle>
               <Building2 className="h-4 w-4 text-slate-400" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-slate-900">{campaigns.length}</div>
+              <div className="text-2xl font-bold text-slate-900">
+                {campaigns.length}
+              </div>
             </CardContent>
           </Card>
 
           <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600">Companies</CardTitle>
+              <CardTitle className="text-sm font-medium text-slate-600">
+                Companies
+              </CardTitle>
               <Building2 className="h-4 w-4 text-slate-400" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-slate-900">{companies.length}</div>
+              <div className="text-2xl font-bold text-slate-900">
+                {companies.length}
+              </div>
             </CardContent>
           </Card>
 
           <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600">People</CardTitle>
+              <CardTitle className="text-sm font-medium text-slate-600">
+                People
+              </CardTitle>
               <Users className="h-4 w-4 text-slate-400" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-slate-900">{people.length}</div>
+              <div className="text-2xl font-bold text-slate-900">
+                {people.length}
+              </div>
             </CardContent>
           </Card>
 
           <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600">Active Jobs</CardTitle>
+              <CardTitle className="text-sm font-medium text-slate-600">
+                Active Jobs
+              </CardTitle>
               <Search className="h-4 w-4 text-slate-400" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-slate-900">
-                {getAllJobs().filter(job => job.status === 'in_progress').length}
+                {
+                  getAllJobs().filter((job) => job.status === "in_progress")
+                    .length
+                }
               </div>
             </CardContent>
           </Card>
@@ -206,26 +246,34 @@ export default function Index() {
                   Research Targets
                 </CardTitle>
                 <CardDescription>
-                  Run deep research on people and companies to gather intelligence
+                  Run deep research on people and companies to gather
+                  intelligence
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {people.map((person) => {
                     const researchProgress = getJobProgress(person.id);
-                    
+
                     return (
-                      <div key={person.id} className="flex items-center justify-between p-4 border border-slate-200 rounded-lg bg-white/50">
+                      <div
+                        key={person.id}
+                        className="flex items-center justify-between p-4 border border-slate-200 rounded-lg bg-white/50"
+                      >
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
                             <div className="h-10 w-10 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center">
                               <span className="text-sm font-semibold text-blue-700">
-                                {person.full_name?.charAt(0) || 'U'}
+                                {person.full_name?.charAt(0) || "U"}
                               </span>
                             </div>
                             <div>
-                              <h3 className="font-semibold text-slate-900">{person.full_name}</h3>
-                              <p className="text-sm text-slate-600">{person.title}</p>
+                              <h3 className="font-semibold text-slate-900">
+                                {person.full_name}
+                              </h3>
+                              <p className="text-sm text-slate-600">
+                                {person.title}
+                              </p>
                             </div>
                           </div>
                           <div className="flex items-center gap-4 text-sm text-slate-600">
@@ -235,35 +283,39 @@ export default function Index() {
                             <span>•</span>
                             <span>{person.company.domain}</span>
                           </div>
-                          
+
                           {researchProgress && (
                             <div className="mt-3 space-y-2">
                               <div className="flex items-center gap-2">
                                 {getStatusIcon(researchProgress.status)}
                                 {getStatusBadge(researchProgress.status)}
                                 <span className="text-sm text-slate-600">
-                                  Iteration {researchProgress.current_iteration} of {researchProgress.max_iterations}
+                                  Iteration {researchProgress.current_iteration}{" "}
+                                  of {researchProgress.max_iterations}
                                 </span>
                               </div>
-                              
+
                               {researchProgress.current_query && (
                                 <p className="text-sm text-slate-600">
                                   {researchProgress.current_query}
                                 </p>
                               )}
-                              
+
                               <div className="flex gap-2 flex-wrap">
                                 <span className="text-xs text-green-600">
-                                  Found: {researchProgress.found_fields.length} fields
+                                  Found: {researchProgress.found_fields.length}{" "}
+                                  fields
                                 </span>
                                 <span className="text-xs text-orange-600">
-                                  Missing: {researchProgress.missing_fields.length} fields
+                                  Missing:{" "}
+                                  {researchProgress.missing_fields.length}{" "}
+                                  fields
                                 </span>
                               </div>
                             </div>
                           )}
                         </div>
-                        
+
                         <div className="flex items-center gap-2">
                           <Link to={`/research/${person.id}`}>
                             <Button variant="outline" size="sm">
@@ -273,11 +325,15 @@ export default function Index() {
                           </Link>
                           <Button
                             onClick={() => runResearch(person.id)}
-                            disabled={researchProgress?.status === 'in_progress'}
+                            disabled={
+                              researchProgress?.status === "in_progress"
+                            }
                             className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
                           >
                             <PlayCircle className="h-4 w-4 mr-2" />
-                            {researchProgress?.status === 'in_progress' ? 'Researching...' : 'Run Research'}
+                            {researchProgress?.status === "in_progress"
+                              ? "Researching..."
+                              : "Run Research"}
                           </Button>
                         </div>
                       </div>
@@ -302,17 +358,31 @@ export default function Index() {
               <CardContent>
                 <div className="space-y-4">
                   {campaigns.map((campaign) => (
-                    <div key={campaign.id} className="p-4 border border-slate-200 rounded-lg bg-white/50">
+                    <div
+                      key={campaign.id}
+                      className="p-4 border border-slate-200 rounded-lg bg-white/50"
+                    >
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-semibold text-slate-900">{campaign.name}</h3>
+                          <h3 className="font-semibold text-slate-900">
+                            {campaign.name}
+                          </h3>
                           <p className="text-sm text-slate-600">
-                            Created {new Date(campaign.created_at).toLocaleDateString()}
+                            Created{" "}
+                            {new Date(campaign.created_at).toLocaleDateString()}
                           </p>
                         </div>
-                        <Badge 
-                          variant={campaign.status === 'active' ? 'default' : 'secondary'}
-                          className={campaign.status === 'active' ? 'bg-green-100 text-green-800 border-green-200' : ''}
+                        <Badge
+                          variant={
+                            campaign.status === "active"
+                              ? "default"
+                              : "secondary"
+                          }
+                          className={
+                            campaign.status === "active"
+                              ? "bg-green-100 text-green-800 border-green-200"
+                              : ""
+                          }
                         >
                           {campaign.status}
                         </Badge>

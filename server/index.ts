@@ -12,7 +12,7 @@ import {
   handleGetPerson,
   handleEnrichPerson,
   handleGetJobStatus,
-  handleGetJobs
+  handleGetJobs,
 } from "./routes/api";
 import { handleProgressStream } from "./routes/sse";
 

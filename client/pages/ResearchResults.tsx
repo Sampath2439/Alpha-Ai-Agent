@@ -1,23 +1,29 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import Layout from '@/components/Layout';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import Layout from "@/components/Layout";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
   ArrowLeft,
-  Building2, 
-  Users, 
-  DollarSign, 
+  Building2,
+  Users,
+  DollarSign,
   Target,
   Globe,
   Package,
   ExternalLink,
   Download,
-  Eye
-} from 'lucide-react';
-import { Person, Company, ContextSnippet } from '@shared/api';
+  Eye,
+} from "lucide-react";
+import { Person, Company, ContextSnippet } from "@shared/api";
 
 interface PersonWithCompany extends Person {
   company: Company;
@@ -39,7 +45,7 @@ export default function ResearchResults() {
     try {
       const [personRes, snippetsRes] = await Promise.all([
         fetch(`/api/people/${personId}`),
-        fetch(`/api/snippets/person/${personId}`)
+        fetch(`/api/snippets/person/${personId}`),
       ]);
 
       if (personRes.ok) {
@@ -47,7 +53,9 @@ export default function ResearchResults() {
         setPerson(personData);
 
         // Also get company snippets
-        const companySnippetsRes = await fetch(`/api/snippets/company/${personData.company.id}`);
+        const companySnippetsRes = await fetch(
+          `/api/snippets/company/${personData.company.id}`,
+        );
         if (companySnippetsRes.ok) {
           const companySnippetsData = await companySnippetsRes.json();
           setSnippets(companySnippetsData.snippets || []);
@@ -56,16 +64,17 @@ export default function ResearchResults() {
 
       if (snippetsRes.ok) {
         const snippetsData = await snippetsRes.json();
-        setSnippets(prev => [...prev, ...(snippetsData.snippets || [])]);
+        setSnippets((prev) => [...prev, ...(snippetsData.snippets || [])]);
       }
     } catch (error) {
-      console.error('Failed to load research data:', error);
+      console.error("Failed to load research data:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const latestSnippet = snippets.length > 0 ? snippets[snippets.length - 1] : null;
+  const latestSnippet =
+    snippets.length > 0 ? snippets[snippets.length - 1] : null;
   const researchData = latestSnippet?.payload;
 
   if (loading) {
@@ -114,8 +123,12 @@ export default function ResearchResults() {
                 </Button>
               </Link>
               <div>
-                <h1 className="text-lg sm:text-xl font-bold text-gray-900">Research Results</h1>
-                <p className="text-xs sm:text-sm text-gray-600 truncate">{person.full_name} • {person.company.name}</p>
+                <h1 className="text-lg sm:text-xl font-bold text-gray-900">
+                  Research Results
+                </h1>
+                <p className="text-xs sm:text-sm text-gray-600 truncate">
+                  {person.full_name} • {person.company.name}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2 self-start sm:self-auto">
@@ -135,205 +148,236 @@ export default function ResearchResults() {
                 <div className="flex items-center gap-3 sm:gap-4">
                   <div className="h-12 w-12 sm:h-16 sm:w-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-lg sm:text-xl font-bold text-blue-700">
-                      {person.full_name?.charAt(0) || 'U'}
+                      {person.full_name?.charAt(0) || "U"}
                     </span>
                   </div>
                   <div className="min-w-0">
-                    <CardTitle className="text-lg sm:text-2xl truncate">{person.full_name}</CardTitle>
-                    <CardDescription className="text-sm sm:text-lg truncate">{person.title}</CardDescription>
+                    <CardTitle className="text-lg sm:text-2xl truncate">
+                      {person.full_name}
+                    </CardTitle>
+                    <CardDescription className="text-sm sm:text-lg truncate">
+                      {person.title}
+                    </CardDescription>
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-2">
-                      <Badge variant="outline" className="text-xs truncate">{person.email}</Badge>
-                      <Badge variant="secondary" className="text-xs truncate">{person.company.name}</Badge>
+                      <Badge variant="outline" className="text-xs truncate">
+                        {person.email}
+                      </Badge>
+                      <Badge variant="secondary" className="text-xs truncate">
+                        {person.company.name}
+                      </Badge>
                     </div>
                   </div>
                 </div>
                 <div className="text-left lg:text-right flex-shrink-0">
-                  <p className="text-xs sm:text-sm text-gray-600">Research Status</p>
-                  <Badge variant={snippets.length > 0 ? 'default' : 'secondary'} className="mt-1 text-xs">
-                    {snippets.length > 0 ? 'Completed' : 'Not Started'}
+                  <p className="text-xs sm:text-sm text-gray-600">
+                    Research Status
+                  </p>
+                  <Badge
+                    variant={snippets.length > 0 ? "default" : "secondary"}
+                    className="mt-1 text-xs"
+                  >
+                    {snippets.length > 0 ? "Completed" : "Not Started"}
                   </Badge>
                 </div>
               </div>
             </CardHeader>
           </Card>
 
-        {/* Research Results */}
-        {researchData ? (
-          <Tabs defaultValue="overview" className="space-y-6">
-            <TabsList className="bg-white/80 backdrop-blur-sm border border-slate-200">
-              <TabsTrigger value="overview">
-                <Eye className="h-4 w-4 mr-2" />
-                Overview
-              </TabsTrigger>
-              <TabsTrigger value="raw-data">
-                <Package className="h-4 w-4 mr-2" />
-                Raw Data
-              </TabsTrigger>
-            </TabsList>
+          {/* Research Results */}
+          {researchData ? (
+            <Tabs defaultValue="overview" className="space-y-6">
+              <TabsList className="bg-white/80 backdrop-blur-sm border border-slate-200">
+                <TabsTrigger value="overview">
+                  <Eye className="h-4 w-4 mr-2" />
+                  Overview
+                </TabsTrigger>
+                <TabsTrigger value="raw-data">
+                  <Package className="h-4 w-4 mr-2" />
+                  Raw Data
+                </TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="overview" className="space-y-4 sm:space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-                {/* Company Value Proposition */}
+              <TabsContent value="overview" className="space-y-4 sm:space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                  {/* Company Value Proposition */}
+                  <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Target className="h-5 w-5 text-blue-600" />
+                        Value Proposition
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-slate-700 leading-relaxed">
+                        {researchData.company_value_prop || "Not available"}
+                      </p>
+                    </CardContent>
+                  </Card>
+
+                  {/* Products */}
+                  <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Package className="h-5 w-5 text-green-600" />
+                        Products & Services
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      {researchData.product_names &&
+                      researchData.product_names.length > 0 ? (
+                        <div className="flex flex-wrap gap-2">
+                          {researchData.product_names.map((product, index) => (
+                            <Badge
+                              key={index}
+                              variant="secondary"
+                              className="bg-green-50 text-green-700 border-green-200"
+                            >
+                              {product}
+                            </Badge>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-slate-500">No products identified</p>
+                      )}
+                    </CardContent>
+                  </Card>
+
+                  {/* Pricing Model */}
+                  <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <DollarSign className="h-5 w-5 text-yellow-600" />
+                        Pricing Model
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-slate-700">
+                        {researchData.pricing_model || "Not available"}
+                      </p>
+                    </CardContent>
+                  </Card>
+
+                  {/* Competitors */}
+                  <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Building2 className="h-5 w-5 text-red-600" />
+                        Key Competitors
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      {researchData.key_competitors &&
+                      researchData.key_competitors.length > 0 ? (
+                        <div className="flex flex-wrap gap-2">
+                          {researchData.key_competitors.map(
+                            (competitor, index) => (
+                              <Badge
+                                key={index}
+                                variant="outline"
+                                className="bg-red-50 text-red-700 border-red-200"
+                              >
+                                {competitor}
+                              </Badge>
+                            ),
+                          )}
+                        </div>
+                      ) : (
+                        <p className="text-slate-500">
+                          No competitors identified
+                        </p>
+                      )}
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Company Domain */}
+                {researchData.company_domain && (
+                  <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Globe className="h-5 w-5 text-purple-600" />
+                        Company Domain
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <a
+                        href={`https://${researchData.company_domain}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        {researchData.company_domain}
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* Source URLs */}
+                {latestSnippet?.source_urls &&
+                  latestSnippet.source_urls.length > 0 && (
+                    <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                          <ExternalLink className="h-5 w-5 text-slate-600" />
+                          Source URLs
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-2">
+                          {latestSnippet.source_urls.map((url, index) => (
+                            <a
+                              key={index}
+                              href={url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block text-sm text-blue-600 hover:text-blue-800 transition-colors truncate"
+                            >
+                              {url}
+                            </a>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
+              </TabsContent>
+
+              <TabsContent value="raw-data">
                 <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Target className="h-5 w-5 text-blue-600" />
-                      Value Proposition
-                    </CardTitle>
+                    <CardTitle>Raw Research Data</CardTitle>
+                    <CardDescription>
+                      Structured JSON output from the research agent
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-slate-700 leading-relaxed">
-                      {researchData.company_value_prop || 'Not available'}
-                    </p>
+                    <pre className="bg-slate-50 rounded-lg p-4 overflow-auto text-sm">
+                      {JSON.stringify(researchData, null, 2)}
+                    </pre>
                   </CardContent>
                 </Card>
-
-                {/* Products */}
-                <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Package className="h-5 w-5 text-green-600" />
-                      Products & Services
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    {researchData.product_names && researchData.product_names.length > 0 ? (
-                      <div className="flex flex-wrap gap-2">
-                        {researchData.product_names.map((product, index) => (
-                          <Badge key={index} variant="secondary" className="bg-green-50 text-green-700 border-green-200">
-                            {product}
-                          </Badge>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="text-slate-500">No products identified</p>
-                    )}
-                  </CardContent>
-                </Card>
-
-                {/* Pricing Model */}
-                <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <DollarSign className="h-5 w-5 text-yellow-600" />
-                      Pricing Model
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-slate-700">
-                      {researchData.pricing_model || 'Not available'}
-                    </p>
-                  </CardContent>
-                </Card>
-
-                {/* Competitors */}
-                <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Building2 className="h-5 w-5 text-red-600" />
-                      Key Competitors
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    {researchData.key_competitors && researchData.key_competitors.length > 0 ? (
-                      <div className="flex flex-wrap gap-2">
-                        {researchData.key_competitors.map((competitor, index) => (
-                          <Badge key={index} variant="outline" className="bg-red-50 text-red-700 border-red-200">
-                            {competitor}
-                          </Badge>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="text-slate-500">No competitors identified</p>
-                    )}
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Company Domain */}
-              {researchData.company_domain && (
-                <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Globe className="h-5 w-5 text-purple-600" />
-                      Company Domain
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <a 
-                      href={`https://${researchData.company_domain}`} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
-                    >
-                      {researchData.company_domain}
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
-                  </CardContent>
-                </Card>
-              )}
-
-              {/* Source URLs */}
-              {latestSnippet?.source_urls && latestSnippet.source_urls.length > 0 && (
-                <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <ExternalLink className="h-5 w-5 text-slate-600" />
-                      Source URLs
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2">
-                      {latestSnippet.source_urls.map((url, index) => (
-                        <a 
-                          key={index}
-                          href={url} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="block text-sm text-blue-600 hover:text-blue-800 transition-colors truncate"
-                        >
-                          {url}
-                        </a>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-            </TabsContent>
-
-            <TabsContent value="raw-data">
-              <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
-                <CardHeader>
-                  <CardTitle>Raw Research Data</CardTitle>
-                  <CardDescription>
-                    Structured JSON output from the research agent
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <pre className="bg-slate-50 rounded-lg p-4 overflow-auto text-sm">
-                    {JSON.stringify(researchData, null, 2)}
-                  </pre>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        ) : (
-          <Card className="bg-white/80 backdrop-blur-sm border-slate-200 text-center py-12">
-            <CardContent>
-              <Users className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">No Research Data Available</h3>
-              <p className="text-slate-600 mb-6">
-                No research has been conducted for this person yet. Run research from the dashboard to see results here.
-              </p>
-              <Link to="/">
-                <Button>
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Go to Dashboard
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
-        )}
+              </TabsContent>
+            </Tabs>
+          ) : (
+            <Card className="bg-white/80 backdrop-blur-sm border-slate-200 text-center py-12">
+              <CardContent>
+                <Users className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                  No Research Data Available
+                </h3>
+                <p className="text-slate-600 mb-6">
+                  No research has been conducted for this person yet. Run
+                  research from the dashboard to see results here.
+                </p>
+                <Link to="/">
+                  <Button>
+                    <ArrowLeft className="h-4 w-4 mr-2" />
+                    Go to Dashboard
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     </Layout>

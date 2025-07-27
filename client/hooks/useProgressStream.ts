@@ -1,8 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
-import { ResearchProgress } from '@shared/api';
+import { useEffect, useRef, useState } from "react";
+import { ResearchProgress } from "@shared/api";
 
 interface ProgressStreamEvent {
-  type: 'connected' | 'progress' | 'completed' | 'failed' | 'queued' | 'heartbeat';
+  type:
+    | "connected"
+    | "progress"
+    | "completed"
+    | "failed"
+    | "queued"
+    | "heartbeat";
   data?: ResearchProgress;
   timestamp?: string;
 }
@@ -22,11 +28,13 @@ export function useProgressStream() {
       }
 
       // Create EventSource connection
-      const eventSource = new EventSource('/api/progress-stream');
+      const eventSource = new EventSource("/api/progress-stream");
       eventSourceRef.current = eventSource;
 
       let connectionTimeout = setTimeout(() => {
-        console.warn('SSE connection timeout - operating without real-time updates');
+        console.warn(
+          "SSE connection timeout - operating without real-time updates",
+        );
         setIsConnected(false);
         if (eventSourceRef.current) {
           eventSourceRef.current.close();
@@ -35,13 +43,15 @@ export function useProgressStream() {
       }, 10000);
 
       eventSource.onopen = () => {
-        console.log('SSE connection opened');
+        console.log("SSE connection opened");
         setIsConnected(true);
         clearTimeout(connectionTimeout);
       };
 
       eventSource.onerror = (error) => {
-        console.warn('SSE connection failed - operating without real-time updates');
+        console.warn(
+          "SSE connection failed - operating without real-time updates",
+        );
         setIsConnected(false);
         clearTimeout(connectionTimeout);
 
@@ -58,35 +68,42 @@ export function useProgressStream() {
       eventSource.onmessage = (event) => {
         try {
           const eventData: ProgressStreamEvent = JSON.parse(event.data);
-          
+
           switch (eventData.type) {
-            case 'connected':
-              console.log('Connected to progress stream');
+            case "connected":
+              console.log("Connected to progress stream");
               break;
-              
-            case 'queued':
-            case 'progress':
-            case 'completed':
-            case 'failed':
+
+            case "queued":
+            case "progress":
+            case "completed":
+            case "failed":
               if (eventData.data) {
-                setJobs(prev => new Map(prev.set(eventData.data!.person_id, eventData.data!)));
+                setJobs(
+                  (prev) =>
+                    new Map(
+                      prev.set(eventData.data!.person_id, eventData.data!),
+                    ),
+                );
               }
               break;
-              
-            case 'heartbeat':
+
+            case "heartbeat":
               // Just keep the connection alive
               break;
-              
+
             default:
-              console.log('Unknown SSE event type:', eventData.type);
+              console.log("Unknown SSE event type:", eventData.type);
           }
         } catch (error) {
-          console.error('Error parsing SSE data:', error);
+          console.error("Error parsing SSE data:", error);
         }
       };
-
     } catch (error) {
-      console.warn('Failed to create SSE connection - operating without real-time updates:', error);
+      console.warn(
+        "Failed to create SSE connection - operating without real-time updates:",
+        error,
+      );
       setIsConnected(false);
     }
   };
@@ -100,7 +117,7 @@ export function useProgressStream() {
         clearTimeout(reconnectTimeoutRef.current);
         reconnectTimeoutRef.current = null;
       }
-      
+
       if (eventSourceRef.current) {
         eventSourceRef.current.close();
         eventSourceRef.current = null;
@@ -121,6 +138,6 @@ export function useProgressStream() {
     isConnected,
     jobs,
     getJobProgress,
-    getAllJobs
+    getAllJobs,
   };
 }

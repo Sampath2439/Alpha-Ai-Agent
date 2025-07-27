@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { 
-  Users, 
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import {
+  Users,
   Plus,
   Upload,
   RefreshCw,
@@ -13,11 +13,11 @@ import {
   Mail,
   Play,
   Eye,
-  Trash2
-} from 'lucide-react';
-import { Person, Company } from '@shared/api';
-import { useProgressStream } from '@/hooks/useProgressStream';
-import Layout from '@/components/Layout';
+  Trash2,
+} from "lucide-react";
+import { Person, Company } from "@shared/api";
+import { useProgressStream } from "@/hooks/useProgressStream";
+import Layout from "@/components/Layout";
 
 interface PersonWithCompany extends Person {
   company: Company;
@@ -26,7 +26,7 @@ interface PersonWithCompany extends Person {
 export default function People() {
   const [people, setPeople] = useState<PersonWithCompany[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const { getJobProgress } = useProgressStream();
 
   useEffect(() => {
@@ -35,16 +35,20 @@ export default function People() {
 
   const loadPeople = async () => {
     try {
-      const response = await fetch('/api/people');
+      const response = await fetch("/api/people");
       if (response.ok) {
         const data = await response.json();
         setPeople(data.people || []);
       } else {
-        console.warn('People API returned:', response.status, response.statusText);
+        console.warn(
+          "People API returned:",
+          response.status,
+          response.statusText,
+        );
         setPeople([]); // Set empty array as fallback
       }
     } catch (error) {
-      console.error('Failed to load people:', error);
+      console.error("Failed to load people:", error);
       setPeople([]); // Set empty array as fallback
     } finally {
       setLoading(false);
@@ -54,45 +58,66 @@ export default function People() {
   const runResearch = async (personId: string) => {
     try {
       const response = await fetch(`/api/enrich/${personId}`, {
-        method: 'POST',
+        method: "POST",
       });
-      
+
       if (!response.ok) {
-        throw new Error('Failed to start research');
+        throw new Error("Failed to start research");
       }
 
       const data = await response.json();
-      console.log('Research job queued:', data);
+      console.log("Research job queued:", data);
     } catch (error) {
-      console.error('Failed to start research:', error);
+      console.error("Failed to start research:", error);
     }
   };
 
-  const filteredPeople = people.filter(person => 
-    person.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    person.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    person.company.name?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredPeople = people.filter(
+    (person) =>
+      person.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      person.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      person.company.name?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const getPersonInitial = (name: string | null) => {
-    return name ? name.charAt(0).toUpperCase() : 'U';
+    return name ? name.charAt(0).toUpperCase() : "U";
   };
 
   const getStatusBadge = (personId: string) => {
     const progress = getJobProgress(personId);
     if (!progress) {
-      return <Badge variant="outline" className="text-xs">Not Started</Badge>;
+      return (
+        <Badge variant="outline" className="text-xs">
+          Not Started
+        </Badge>
+      );
     }
 
     switch (progress.status) {
-      case 'completed':
-        return <Badge className="bg-green-100 text-green-800 border-green-200 text-xs">Complete</Badge>;
-      case 'in_progress':
-        return <Badge variant="secondary" className="text-xs">In Progress</Badge>;
-      case 'failed':
-        return <Badge variant="destructive" className="text-xs">Failed</Badge>;
+      case "completed":
+        return (
+          <Badge className="bg-green-100 text-green-800 border-green-200 text-xs">
+            Complete
+          </Badge>
+        );
+      case "in_progress":
+        return (
+          <Badge variant="secondary" className="text-xs">
+            In Progress
+          </Badge>
+        );
+      case "failed":
+        return (
+          <Badge variant="destructive" className="text-xs">
+            Failed
+          </Badge>
+        );
       default:
-        return <Badge variant="outline" className="text-xs">Queued</Badge>;
+        return (
+          <Badge variant="outline" className="text-xs">
+            Queued
+          </Badge>
+        );
     }
   };
 
@@ -116,11 +141,18 @@ export default function People() {
         <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
-              <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">People Management</h1>
-              <p className="text-sm sm:text-base text-gray-600">Manage research targets and run deep intelligence gathering</p>
+              <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">
+                People Management
+              </h1>
+              <p className="text-sm sm:text-base text-gray-600">
+                Manage research targets and run deep intelligence gathering
+              </p>
             </div>
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
-              <Button variant="outline" className="text-purple-700 border-purple-200 hover:bg-purple-50">
+              <Button
+                variant="outline"
+                className="text-purple-700 border-purple-200 hover:bg-purple-50"
+              >
                 <Upload className="w-4 h-4 mr-2" />
                 <span className="hidden sm:inline">Import CSV/Excel</span>
                 <span className="sm:hidden">Import</span>
@@ -149,7 +181,9 @@ export default function People() {
                   className="w-full"
                 />
               </div>
-              <span className="text-sm text-gray-500 self-center">{filteredPeople.length} people</span>
+              <span className="text-sm text-gray-500 self-center">
+                {filteredPeople.length} people
+              </span>
             </div>
           </div>
 
@@ -185,8 +219,12 @@ export default function People() {
                           </span>
                         </div>
                         <div className="min-w-0">
-                          <p className="font-medium text-gray-900 truncate">{person.full_name || 'Unknown'}</p>
-                          <p className="text-sm text-gray-500 truncate mt-1">{person.title || 'No title'}</p>
+                          <p className="font-medium text-gray-900 truncate">
+                            {person.full_name || "Unknown"}
+                          </p>
+                          <p className="text-sm text-gray-500 truncate mt-1">
+                            {person.title || "No title"}
+                          </p>
                         </div>
                       </div>
 
@@ -194,8 +232,12 @@ export default function People() {
                       <div className="col-span-3 flex items-center gap-3 min-w-0">
                         <Building2 className="w-5 h-5 text-gray-400 flex-shrink-0" />
                         <div className="min-w-0">
-                          <p className="font-medium text-gray-900 truncate">{person.company.name || 'Unknown Company'}</p>
-                          <p className="text-sm text-gray-500 truncate mt-1">{person.company.domain || 'No domain'}</p>
+                          <p className="font-medium text-gray-900 truncate">
+                            {person.company.name || "Unknown Company"}
+                          </p>
+                          <p className="text-sm text-gray-500 truncate mt-1">
+                            {person.company.domain || "No domain"}
+                          </p>
                         </div>
                       </div>
 
@@ -203,7 +245,9 @@ export default function People() {
                       <div className="col-span-2 min-w-0">
                         <div className="flex items-center gap-3">
                           <Mail className="w-5 h-5 text-gray-400 flex-shrink-0" />
-                          <span className="text-sm text-gray-600 truncate">{person.email || 'No email'}</span>
+                          <span className="text-sm text-gray-600 truncate">
+                            {person.email || "No email"}
+                          </span>
                         </div>
                       </div>
 
@@ -215,7 +259,11 @@ export default function People() {
                       {/* Actions */}
                       <div className="col-span-3 flex items-center gap-3">
                         <Link to={`/research/${person.id}`}>
-                          <Button variant="outline" size="sm" className="text-xs whitespace-nowrap px-3 py-1.5">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-xs whitespace-nowrap px-3 py-1.5"
+                          >
                             <Eye className="w-3 h-3 mr-1" />
                             View
                           </Button>
@@ -223,13 +271,21 @@ export default function People() {
                         <Button
                           size="sm"
                           onClick={() => runResearch(person.id)}
-                          disabled={getJobProgress(person.id)?.status === 'in_progress'}
+                          disabled={
+                            getJobProgress(person.id)?.status === "in_progress"
+                          }
                           className="bg-blue-600 hover:bg-blue-700 text-xs whitespace-nowrap px-3 py-1.5"
                         >
                           <Play className="w-3 h-3 mr-1" />
-                          {getJobProgress(person.id)?.status === 'in_progress' ? 'Running...' : 'Research'}
+                          {getJobProgress(person.id)?.status === "in_progress"
+                            ? "Running..."
+                            : "Research"}
                         </Button>
-                        <Button variant="outline" size="sm" className="text-xs text-red-600 hover:text-red-700 px-2 py-1.5">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-xs text-red-600 hover:text-red-700 px-2 py-1.5"
+                        >
                           <Trash2 className="w-3 h-3" />
                         </Button>
                       </div>
@@ -245,8 +301,12 @@ export default function People() {
                             </span>
                           </div>
                           <div>
-                            <p className="font-medium text-gray-900">{person.full_name || 'Unknown'}</p>
-                            <p className="text-sm text-gray-500">{person.title || 'No title'}</p>
+                            <p className="font-medium text-gray-900">
+                              {person.full_name || "Unknown"}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              {person.title || "No title"}
+                            </p>
                           </div>
                         </div>
                         {getStatusBadge(person.id)}
@@ -256,22 +316,32 @@ export default function People() {
                         <div className="flex items-center gap-2">
                           <Building2 className="w-4 h-4 text-gray-400 flex-shrink-0" />
                           <div>
-                            <span className="font-medium text-gray-900">{person.company.name || 'Unknown Company'}</span>
+                            <span className="font-medium text-gray-900">
+                              {person.company.name || "Unknown Company"}
+                            </span>
                             {person.company.domain && (
-                              <span className="text-gray-500 ml-2">• {person.company.domain}</span>
+                              <span className="text-gray-500 ml-2">
+                                • {person.company.domain}
+                              </span>
                             )}
                           </div>
                         </div>
 
                         <div className="flex items-center gap-2">
                           <Mail className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                          <span className="text-gray-600 truncate">{person.email || 'No email'}</span>
+                          <span className="text-gray-600 truncate">
+                            {person.email || "No email"}
+                          </span>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between pt-2 border-t border-gray-100">
                         <Link to={`/research/${person.id}`}>
-                          <Button variant="outline" size="sm" className="text-xs">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-xs"
+                          >
                             <Eye className="w-3 h-3 mr-1" />
                             View
                           </Button>
@@ -280,13 +350,22 @@ export default function People() {
                           <Button
                             size="sm"
                             onClick={() => runResearch(person.id)}
-                            disabled={getJobProgress(person.id)?.status === 'in_progress'}
+                            disabled={
+                              getJobProgress(person.id)?.status ===
+                              "in_progress"
+                            }
                             className="bg-blue-600 hover:bg-blue-700 text-xs"
                           >
                             <Play className="w-3 h-3 mr-1" />
-                            {getJobProgress(person.id)?.status === 'in_progress' ? 'Running...' : 'Research'}
+                            {getJobProgress(person.id)?.status === "in_progress"
+                              ? "Running..."
+                              : "Research"}
                           </Button>
-                          <Button variant="outline" size="sm" className="text-xs text-red-600 hover:text-red-700">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-xs text-red-600 hover:text-red-700"
+                          >
                             <Trash2 className="w-3 h-3" />
                           </Button>
                         </div>
@@ -299,9 +378,13 @@ export default function People() {
               {filteredPeople.length === 0 && (
                 <div className="text-center py-8">
                   <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No people found</h3>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">
+                    No people found
+                  </h3>
                   <p className="text-gray-600 mb-4">
-                    {searchTerm ? 'No people match your search criteria.' : 'Get started by adding your first research target.'}
+                    {searchTerm
+                      ? "No people match your search criteria."
+                      : "Get started by adding your first research target."}
                   </p>
                   <Button className="bg-green-600 hover:bg-green-700">
                     <Plus className="w-4 h-4 mr-2" />

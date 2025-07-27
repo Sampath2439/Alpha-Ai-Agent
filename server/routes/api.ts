@@ -5,14 +5,14 @@ import {
   PeopleListResponse,
   CompanySnippetsResponse,
   HealthResponse,
-  EnrichPersonResponse
+  EnrichPersonResponse,
 } from "@shared/api";
 
 // Health check
 export const handleHealth: RequestHandler = (req, res) => {
   const response: HealthResponse = {
-    status: 'ok',
-    timestamp: new Date().toISOString()
+    status: "ok",
+    timestamp: new Date().toISOString(),
   };
   res.json(response);
 };
@@ -39,12 +39,12 @@ export const handleGetCompanies: RequestHandler = (req, res) => {
 // Get context snippets for a company
 export const handleGetCompanySnippets: RequestHandler = (req, res) => {
   const { company_id } = req.params;
-  
+
   if (!company_id) {
-    return res.status(400).json({ error: 'Company ID is required' });
+    return res.status(400).json({ error: "Company ID is required" });
   }
 
-  const snippets = db.getContextSnippetsByEntity('company', company_id);
+  const snippets = db.getContextSnippetsByEntity("company", company_id);
   const response: CompanySnippetsResponse = { snippets };
   res.json(response);
 };
@@ -52,12 +52,12 @@ export const handleGetCompanySnippets: RequestHandler = (req, res) => {
 // Get context snippets for a person
 export const handleGetPersonSnippets: RequestHandler = (req, res) => {
   const { person_id } = req.params;
-  
+
   if (!person_id) {
-    return res.status(400).json({ error: 'Person ID is required' });
+    return res.status(400).json({ error: "Person ID is required" });
   }
 
-  const snippets = db.getContextSnippetsByEntity('person', person_id);
+  const snippets = db.getContextSnippetsByEntity("person", person_id);
   const response: CompanySnippetsResponse = { snippets };
   res.json(response);
 };
@@ -65,19 +65,19 @@ export const handleGetPersonSnippets: RequestHandler = (req, res) => {
 // Get a specific person
 export const handleGetPerson: RequestHandler = (req, res) => {
   const { person_id } = req.params;
-  
+
   if (!person_id) {
-    return res.status(400).json({ error: 'Person ID is required' });
+    return res.status(400).json({ error: "Person ID is required" });
   }
 
   const person = db.getPerson(person_id);
   if (!person) {
-    return res.status(404).json({ error: 'Person not found' });
+    return res.status(404).json({ error: "Person not found" });
   }
 
   const company = db.getCompany(person.company_id);
   if (!company) {
-    return res.status(404).json({ error: 'Company not found' });
+    return res.status(404).json({ error: "Company not found" });
   }
 
   res.json({ ...person, company });
@@ -88,12 +88,12 @@ export const handleEnrichPerson: RequestHandler = (req, res) => {
   const { person_id } = req.params;
 
   if (!person_id) {
-    return res.status(400).json({ error: 'Person ID is required' });
+    return res.status(400).json({ error: "Person ID is required" });
   }
 
   const person = db.getPerson(person_id);
   if (!person) {
-    return res.status(404).json({ error: 'Person not found' });
+    return res.status(404).json({ error: "Person not found" });
   }
 
   try {
@@ -101,14 +101,14 @@ export const handleEnrichPerson: RequestHandler = (req, res) => {
 
     const response: EnrichPersonResponse = {
       job_id: jobId,
-      status: 'queued',
-      message: 'Research job queued successfully'
+      status: "queued",
+      message: "Research job queued successfully",
     };
 
     res.json(response);
   } catch (error) {
-    console.error('Failed to enqueue job:', error);
-    res.status(500).json({ error: 'Failed to queue research job' });
+    console.error("Failed to enqueue job:", error);
+    res.status(500).json({ error: "Failed to queue research job" });
   }
 };
 
@@ -117,12 +117,12 @@ export const handleGetJobStatus: RequestHandler = (req, res) => {
   const { job_id } = req.params;
 
   if (!job_id) {
-    return res.status(400).json({ error: 'Job ID is required' });
+    return res.status(400).json({ error: "Job ID is required" });
   }
 
   const job = jobQueue.getJob(job_id);
   if (!job) {
-    return res.status(404).json({ error: 'Job not found' });
+    return res.status(404).json({ error: "Job not found" });
   }
 
   res.json(job.progress);

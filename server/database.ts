@@ -1,5 +1,11 @@
-import { Campaign, Company, Person, ContextSnippet, SearchLog } from '@shared/api';
-import { v4 as uuidv4 } from 'uuid';
+import {
+  Campaign,
+  Company,
+  Person,
+  ContextSnippet,
+  SearchLog,
+} from "@shared/api";
+import { v4 as uuidv4 } from "uuid";
 
 // In-memory database storage
 export class Database {
@@ -17,8 +23,8 @@ export class Database {
     // Create 1 Campaign
     const campaign: Campaign = {
       id: uuidv4(),
-      name: 'Q1 2024 Outreach Campaign',
-      status: 'active',
+      name: "Q1 2024 Outreach Campaign",
+      status: "active",
       created_at: new Date().toISOString(),
     };
     this.campaigns.set(campaign.id, campaign);
@@ -27,8 +33,8 @@ export class Database {
     const company: Company = {
       id: uuidv4(),
       campaign_id: campaign.id,
-      name: 'TechCorp Solutions',
-      domain: 'techcorp.com',
+      name: "TechCorp Solutions",
+      domain: "techcorp.com",
       created_at: new Date().toISOString(),
     };
     this.companies.set(company.id, company);
@@ -37,18 +43,18 @@ export class Database {
     const person1: Person = {
       id: uuidv4(),
       company_id: company.id,
-      full_name: 'Sarah Johnson',
-      email: 'sarah.johnson@techcorp.com',
-      title: 'Chief Technology Officer',
+      full_name: "Sarah Johnson",
+      email: "sarah.johnson@techcorp.com",
+      title: "Chief Technology Officer",
       created_at: new Date().toISOString(),
     };
 
     const person2: Person = {
       id: uuidv4(),
       company_id: company.id,
-      full_name: 'Michael Chen',
-      email: 'michael.chen@techcorp.com',
-      title: 'VP of Engineering',
+      full_name: "Michael Chen",
+      email: "michael.chen@techcorp.com",
+      title: "VP of Engineering",
       created_at: new Date().toISOString(),
     };
 
@@ -75,7 +81,9 @@ export class Database {
   }
 
   getCompaniesByCampaign(campaignId: string): Company[] {
-    return Array.from(this.companies.values()).filter(c => c.campaign_id === campaignId);
+    return Array.from(this.companies.values()).filter(
+      (c) => c.campaign_id === campaignId,
+    );
   }
 
   // People methods
@@ -88,7 +96,9 @@ export class Database {
   }
 
   getPeopleByCompany(companyId: string): Person[] {
-    return Array.from(this.people.values()).filter(p => p.company_id === companyId);
+    return Array.from(this.people.values()).filter(
+      (p) => p.company_id === companyId,
+    );
   }
 
   getPeopleWithCompanies(): (Person & { company: Company })[] {
@@ -111,13 +121,18 @@ export class Database {
     return this.contextSnippets.get(id);
   }
 
-  getContextSnippetsByEntity(entityType: 'company' | 'person', entityId: string): ContextSnippet[] {
+  getContextSnippetsByEntity(
+    entityType: "company" | "person",
+    entityId: string,
+  ): ContextSnippet[] {
     return Array.from(this.contextSnippets.values()).filter(
-      cs => cs.entity_type === entityType && cs.entity_id === entityId
+      (cs) => cs.entity_type === entityType && cs.entity_id === entityId,
     );
   }
 
-  createContextSnippet(snippet: Omit<ContextSnippet, 'id' | 'created_at'>): ContextSnippet {
+  createContextSnippet(
+    snippet: Omit<ContextSnippet, "id" | "created_at">,
+  ): ContextSnippet {
     const newSnippet: ContextSnippet = {
       id: uuidv4(),
       ...snippet,
@@ -134,11 +149,11 @@ export class Database {
 
   getSearchLogsBySnippet(snippetId: string): SearchLog[] {
     return Array.from(this.searchLogs.values()).filter(
-      sl => sl.context_snippet_id === snippetId
+      (sl) => sl.context_snippet_id === snippetId,
     );
   }
 
-  createSearchLog(log: Omit<SearchLog, 'id' | 'created_at'>): SearchLog {
+  createSearchLog(log: Omit<SearchLog, "id" | "created_at">): SearchLog {
     const newLog: SearchLog = {
       id: uuidv4(),
       ...log,
