@@ -213,9 +213,9 @@ export default function People() {
                       </div>
 
                       {/* Actions */}
-                      <div className="col-span-3 flex items-center gap-2">
+                      <div className="col-span-3 flex items-center gap-3">
                         <Link to={`/research/${person.id}`}>
-                          <Button variant="outline" size="sm" className="text-xs whitespace-nowrap">
+                          <Button variant="outline" size="sm" className="text-xs whitespace-nowrap px-3 py-1.5">
                             <Eye className="w-3 h-3 mr-1" />
                             View
                           </Button>
@@ -224,12 +224,12 @@ export default function People() {
                           size="sm"
                           onClick={() => runResearch(person.id)}
                           disabled={getJobProgress(person.id)?.status === 'in_progress'}
-                          className="bg-blue-600 hover:bg-blue-700 text-xs whitespace-nowrap"
+                          className="bg-blue-600 hover:bg-blue-700 text-xs whitespace-nowrap px-3 py-1.5"
                         >
                           <Play className="w-3 h-3 mr-1" />
                           {getJobProgress(person.id)?.status === 'in_progress' ? 'Running...' : 'Research'}
                         </Button>
-                        <Button variant="outline" size="sm" className="text-xs text-red-600 hover:text-red-700 p-2">
+                        <Button variant="outline" size="sm" className="text-xs text-red-600 hover:text-red-700 px-2 py-1.5">
                           <Trash2 className="w-3 h-3" />
                         </Button>
                       </div>
