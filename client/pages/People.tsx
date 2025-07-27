@@ -178,15 +178,15 @@ export default function People() {
                     {/* Desktop Layout */}
                     <div className="hidden lg:grid lg:grid-cols-12 gap-6 items-center py-4 lg:py-5 border-b border-gray-100 last:border-b-0">
                       {/* Person */}
-                      <div className="col-span-3 flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="text-sm font-semibold text-gray-600">
+                      <div className="col-span-3 flex items-center gap-4">
+                        <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-base font-semibold text-gray-600">
                             {getPersonInitial(person.full_name)}
                           </span>
                         </div>
                         <div className="min-w-0">
                           <p className="font-medium text-gray-900 truncate">{person.full_name || 'Unknown'}</p>
-                          <p className="text-sm text-gray-500 truncate">{person.title || 'No title'}</p>
+                          <p className="text-sm text-gray-500 truncate mt-1">{person.title || 'No title'}</p>
                         </div>
                       </div>
 
