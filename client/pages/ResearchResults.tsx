@@ -103,24 +103,25 @@ export default function ResearchResults() {
     <Layout>
       <div className="flex-1 overflow-auto">
         {/* Header */}
-        <div className="bg-white border-b border-gray-200 px-6 py-4">
-          <div className="flex items-center justify-between">
+        <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <Link to="/">
                 <Button variant="ghost" size="sm">
                   <ArrowLeft className="h-4 w-4 mr-2" />
-                  Dashboard
+                  <span className="hidden sm:inline">Dashboard</span>
+                  <span className="sm:hidden">Back</span>
                 </Button>
               </Link>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">Research Results</h1>
-                <p className="text-sm text-gray-600">{person.full_name} • {person.company.name}</p>
+                <h1 className="text-lg sm:text-xl font-bold text-gray-900">Research Results</h1>
+                <p className="text-xs sm:text-sm text-gray-600 truncate">{person.full_name} • {person.company.name}</p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 self-start sm:self-auto">
               <Button variant="outline" size="sm">
                 <Download className="h-4 w-4 mr-2" />
-                Export
+                <span className="hidden sm:inline">Export</span>
               </Button>
             </div>
           </div>
