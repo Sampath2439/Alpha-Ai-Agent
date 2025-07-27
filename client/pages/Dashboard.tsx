@@ -173,9 +173,9 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+        <div className="p-6 lg:p-8 space-y-6 lg:space-y-8">
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 lg:gap-6">
             <Card className="bg-white border border-gray-200">
               <CardContent className="p-3 sm:p-4">
                 <div className="flex items-center justify-between">
