@@ -168,26 +168,32 @@ export default function People() {
 
   const handleDeletePerson = (personId: string, personName: string) => {
     console.log("🗑️ Delete person clicked:", personId, personName);
+    setPersonToDelete({ id: personId, name: personName });
+    setShowDeleteModal(true);
+  };
 
-    // Show confirmation dialog
-    const confirmed = window.confirm(
-      `Are you sure you want to delete ${personName}?\n\nThis action cannot be undone and will remove all research data associated with this person.`
-    );
+  const handleConfirmDelete = () => {
+    if (!personToDelete) return;
 
-    if (confirmed) {
-      console.log("✅ Delete confirmed for:", personId);
+    console.log("✅ Delete confirmed for:", personToDelete.id);
 
-      // Remove from local state (optimistic update)
-      setPeople(prev => prev.filter(person => person.id !== personId));
+    // Remove from local state (optimistic update)
+    setPeople(prev => prev.filter(person => person.id !== personToDelete.id));
 
-      // TODO: Send DELETE request to API
-      console.log("🚀 Would send DELETE request to /api/people/" + personId);
+    // TODO: Send DELETE request to API
+    console.log("🚀 Would send DELETE request to /api/people/" + personToDelete.id);
 
-      // Show success message
-      alert(`${personName} has been deleted successfully.`);
-    } else {
-      console.log("❌ Delete cancelled for:", personId);
-    }
+    // Close modal and reset state
+    setShowDeleteModal(false);
+    setPersonToDelete(null);
+
+    console.log(`✅ ${personToDelete.name} has been deleted successfully.`);
+  };
+
+  const handleCancelDelete = () => {
+    console.log("❌ Delete cancelled for:", personToDelete?.name);
+    setShowDeleteModal(false);
+    setPersonToDelete(null);
   };
 
   const handleRefreshData = () => {
