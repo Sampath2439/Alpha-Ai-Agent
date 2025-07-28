@@ -79,14 +79,44 @@ export default function People() {
 
   const handleImportCSV = () => {
     console.log("📁 Import CSV/Excel clicked");
-    // TODO: Implement CSV import functionality
-    alert("Import CSV/Excel functionality coming soon!");
+    // Create a file input element
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.csv,.xlsx,.xls';
+    fileInput.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        console.log("📄 File selected:", file.name);
+        alert(`Selected file: ${file.name}\n\nCSV parsing functionality will be implemented soon!`);
+      }
+    };
+    fileInput.click();
   };
 
   const handleAddPerson = () => {
     console.log("👤 Add Person clicked");
-    // TODO: Implement add person functionality
-    alert("Add Person functionality coming soon!");
+
+    // Simple prompt-based person creation
+    const fullName = prompt("Enter person's full name:");
+    if (!fullName) return;
+
+    const email = prompt("Enter person's email:");
+    if (!email) return;
+
+    const title = prompt("Enter person's job title:");
+
+    const companyName = prompt("Enter company name:");
+    if (!companyName) return;
+
+    const companyDomain = prompt("Enter company domain (optional):");
+
+    console.log("👤 Creating person:", { fullName, email, title, companyName, companyDomain });
+
+    // For now, just show what would be created
+    alert(`Person to be created:\n\nName: ${fullName}\nEmail: ${email}\nTitle: ${title || 'Not specified'}\nCompany: ${companyName}\nDomain: ${companyDomain || 'Not specified'}\n\nAPI integration coming soon!`);
+
+    // TODO: Send to API endpoint
+    // createPerson({ fullName, email, title, companyName, companyDomain });
   };
 
   const handleRefreshData = () => {
