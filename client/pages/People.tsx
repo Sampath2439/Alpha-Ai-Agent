@@ -77,6 +77,23 @@ export default function People() {
     }
   };
 
+  const handleImportCSV = () => {
+    console.log("📁 Import CSV/Excel clicked");
+    // TODO: Implement CSV import functionality
+    alert("Import CSV/Excel functionality coming soon!");
+  };
+
+  const handleAddPerson = () => {
+    console.log("👤 Add Person clicked");
+    // TODO: Implement add person functionality
+    alert("Add Person functionality coming soon!");
+  };
+
+  const handleRefreshData = () => {
+    console.log("🔄 Refresh Data clicked");
+    loadPeople();
+  };
+
   const filteredPeople = people.filter(
     (person) =>
       person.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
