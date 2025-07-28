@@ -103,28 +103,38 @@ export default function People() {
 
   const handleAddPerson = () => {
     console.log("👤 Add Person clicked");
+    setShowAddModal(true);
+  };
 
-    // Simple prompt-based person creation
-    const fullName = prompt("Enter person's full name:");
-    if (!fullName) return;
+  const handleCloseModal = () => {
+    setShowAddModal(false);
+    setFormData({
+      fullName: "",
+      email: "",
+      title: "",
+      companyName: "",
+      companyDomain: ""
+    });
+  };
 
-    const email = prompt("Enter person's email:");
-    if (!email) return;
+  const handleSubmitPerson = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("👤 Creating person:", formData);
 
-    const title = prompt("Enter person's job title:");
-
-    const companyName = prompt("Enter company name:");
-    if (!companyName) return;
-
-    const companyDomain = prompt("Enter company domain (optional):");
-
-    console.log("👤 Creating person:", { fullName, email, title, companyName, companyDomain });
-
-    // For now, just show what would be created
-    alert(`Person to be created:\n\nName: ${fullName}\nEmail: ${email}\nTitle: ${title || 'Not specified'}\nCompany: ${companyName}\nDomain: ${companyDomain || 'Not specified'}\n\nAPI integration coming soon!`);
+    // Validate required fields
+    if (!formData.fullName || !formData.email || !formData.companyName) {
+      alert("Please fill in all required fields (Name, Email, Company)");
+      return;
+    }
 
     // TODO: Send to API endpoint
-    // createPerson({ fullName, email, title, companyName, companyDomain });
+    alert(`Person created:\n\nName: ${formData.fullName}\nEmail: ${formData.email}\nTitle: ${formData.title || 'Not specified'}\nCompany: ${formData.companyName}\nDomain: ${formData.companyDomain || 'Not specified'}\n\nAPI integration coming soon!`);
+
+    handleCloseModal();
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   const handleRefreshData = () => {
