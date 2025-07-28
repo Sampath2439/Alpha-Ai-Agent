@@ -72,12 +72,8 @@ export default function People() {
 
       const data = await response.json();
       console.log("✅ Research job queued successfully:", data);
-
-      // Optional: Show user feedback
-      alert(`Research started for person ${personId}! Job ID: ${data.job_id}`);
     } catch (error) {
       console.error("❌ Failed to start research:", error);
-      alert(`Failed to start research: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
