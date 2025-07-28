@@ -56,19 +56,28 @@ export default function People() {
   };
 
   const runResearch = async (personId: string) => {
+    console.log("🚀 Starting research for person:", personId);
     try {
       const response = await fetch(`/api/enrich/${personId}`, {
         method: "POST",
       });
 
+      console.log("📡 API response status:", response.status);
+
       if (!response.ok) {
-        throw new Error("Failed to start research");
+        const errorText = await response.text();
+        console.error("❌ API error response:", errorText);
+        throw new Error(`Failed to start research: ${response.status} ${errorText}`);
       }
 
       const data = await response.json();
-      console.log("Research job queued:", data);
+      console.log("✅ Research job queued successfully:", data);
+
+      // Optional: Show user feedback
+      alert(`Research started for person ${personId}! Job ID: ${data.job_id}`);
     } catch (error) {
-      console.error("Failed to start research:", error);
+      console.error("❌ Failed to start research:", error);
+      alert(`Failed to start research: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
