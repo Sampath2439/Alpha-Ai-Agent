@@ -229,7 +229,7 @@ export class ResearchAgent {
     iteration: number,
   ): string {
     const companyName = company.name || "unknown company";
-    const domain = company.domain || payload.company_domain || "";
+    const domain = company.domain || "";
 
     // Focus on the first missing field for targeted search
     const primaryTarget = missingFields[0];
