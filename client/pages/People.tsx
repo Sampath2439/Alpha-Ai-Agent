@@ -27,6 +27,14 @@ export default function People() {
   const [people, setPeople] = useState<PersonWithCompany[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    title: "",
+    companyName: "",
+    companyDomain: ""
+  });
   const { getJobProgress } = useProgressStream();
 
   useEffect(() => {
