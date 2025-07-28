@@ -89,6 +89,13 @@ export class ResearchAgent {
   ];
 
   async enrichPerson(personId: string): Promise<ResearchPayload> {
+    return this.enrichPersonWithProgress(personId);
+  }
+
+  async enrichPersonWithProgress(
+    personId: string,
+    progressCallback?: (iteration: number, query: string, foundFields: string[], missingFields: string[]) => void
+  ): Promise<ResearchPayload> {
     const person = db.getPerson(personId);
     if (!person) {
       throw new Error("Person not found");
