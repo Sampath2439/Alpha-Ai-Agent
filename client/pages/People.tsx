@@ -43,20 +43,47 @@ export default function People() {
 
   const loadPeople = async () => {
     try {
-      const response = await fetch("/api/people");
+      console.log("🔄 Loading people data...");
+
+      const response = await fetch("/api/people", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // Add timeout to avoid hanging requests
+        signal: AbortSignal.timeout(10000), // 10 second timeout
+      });
+
       if (response.ok) {
         const data = await response.json();
+        console.log("✅ People data loaded successfully:", data);
         setPeople(data.people || []);
       } else {
         console.warn(
-          "People API returned:",
+          "⚠️ People API returned error:",
           response.status,
           response.statusText,
         );
+        // Try to read error message from response
+        try {
+          const errorData = await response.text();
+          console.warn("Error details:", errorData);
+        } catch (e) {
+          console.warn("Could not read error response");
+        }
         setPeople([]); // Set empty array as fallback
       }
     } catch (error) {
-      console.error("Failed to load people:", error);
+      console.error("❌ Failed to load people:", error);
+
+      if (error instanceof Error) {
+        if (error.name === "AbortError") {
+          console.error("Request timed out after 10 seconds");
+        } else if (error.message.includes("Failed to fetch")) {
+          console.error("Network error - server may be unreachable");
+        }
+      }
+
       setPeople([]); // Set empty array as fallback
     } finally {
       setLoading(false);
