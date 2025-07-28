@@ -174,16 +174,24 @@ export default function People() {
               <Button
                 variant="outline"
                 className="text-purple-700 border-purple-200 hover:bg-purple-50"
+                onClick={handleImportCSV}
               >
                 <Upload className="w-4 h-4 mr-2" />
                 <span className="hidden sm:inline">Import CSV/Excel</span>
                 <span className="sm:hidden">Import</span>
               </Button>
-              <Button className="bg-green-600 hover:bg-green-700">
+              <Button
+                className="bg-green-600 hover:bg-green-700"
+                onClick={handleAddPerson}
+              >
                 <Plus className="w-4 h-4 mr-2" />
                 Add Person
               </Button>
-              <Button variant="outline" className="hidden lg:flex">
+              <Button
+                variant="outline"
+                className="hidden lg:flex"
+                onClick={handleRefreshData}
+              >
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Refresh Data
               </Button>
