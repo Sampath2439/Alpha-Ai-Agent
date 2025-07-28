@@ -28,6 +28,8 @@ export default function People() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [personToDelete, setPersonToDelete] = useState<{ id: string; name: string } | null>(null);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
