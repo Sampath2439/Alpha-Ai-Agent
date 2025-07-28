@@ -156,6 +156,11 @@ export class ResearchAgent {
       );
       console.log(`🔍 Iteration ${iteration}: Query: "${query}" (targeting: ${missingFields[0] || 'general'})`);
 
+      // Call progress callback if provided
+      if (progressCallback) {
+        progressCallback(iteration, query, foundFields, missingFields);
+      }
+
       try {
         const searchResults = await this.searchService.search(query);
 
