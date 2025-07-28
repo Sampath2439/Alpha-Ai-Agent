@@ -387,6 +387,7 @@ export default function People() {
                           variant="outline"
                           size="sm"
                           className="text-xs text-red-600 hover:text-red-700 px-2 py-1.5"
+                          onClick={() => handleDeletePerson(person.id, person.full_name || "Unknown")}
                         >
                           <Trash2 className="w-3 h-3" />
                         </Button>
