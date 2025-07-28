@@ -1,6 +1,7 @@
 import { ResearchAgent } from "./research-agent";
 import { ResearchProgress } from "@shared/api";
 import { EventEmitter } from "events";
+import { db } from "./database";
 
 interface Job {
   id: string;
@@ -103,32 +104,29 @@ export class JobQueue extends EventEmitter {
       this.emit("job_progress", job.progress);
 
       try {
-        // Simulate progress updates during research
-        for (let i = 1; i <= 3; i++) {
-          job.progress.current_iteration = i;
-          job.progress.current_query = `Researching iteration ${i}...`;
+        // Create a custom research agent with progress callbacks
+        const progressCallback = (iteration: number, query: string, foundFields: string[], missingFields: string[]) => {
+          job.progress.current_iteration = iteration;
+          job.progress.current_query = query;
+          job.progress.found_fields = foundFields;
+          job.progress.missing_fields = missingFields;
           this.emit("job_progress", job.progress);
+        };
 
-          // Add delay to simulate real work
-          await new Promise((resolve) => setTimeout(resolve, 2000));
-        }
-
-        // Run the actual research
-        const result = await this.researchAgent.enrichPerson(job.personId);
+        // Run the actual research with progress tracking
+        const result = await this.researchAgent.enrichPersonWithProgress(job.personId, progressCallback);
 
         job.status = "completed";
         job.completedAt = new Date();
         job.progress.status = "completed";
-        job.progress.found_fields = Object.keys(result).filter(
-          (key) => result[key as keyof typeof result],
-        );
-        job.progress.missing_fields = [
-          "company_value_prop",
-          "product_names",
-          "pricing_model",
-          "key_competitors",
-          "company_domain",
-        ].filter((field) => !result[field as keyof typeof result]);
+        // Update final progress
+        const requiredFields = ["company_value_prop", "product_names", "pricing_model", "key_competitors", "company_domain"];
+        job.progress.found_fields = requiredFields.filter((field) => {
+          const value = result[field as keyof typeof result];
+          return value && (Array.isArray(value) ? value.length > 0 : value.toString().trim().length > 0);
+        });
+        job.progress.missing_fields = requiredFields.filter(field => !job.progress.found_fields.includes(field));
+        job.progress.current_query = undefined;
 
         this.emit("job_completed", job.progress);
         console.log(`Job ${jobId} completed successfully`);
