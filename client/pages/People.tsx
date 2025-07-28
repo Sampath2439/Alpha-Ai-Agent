@@ -654,6 +654,69 @@ export default function People() {
           </div>
         </div>
       )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && personToDelete && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                  <Trash2 className="w-5 h-5 text-red-600" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-gray-900">Delete Person</h2>
+                  <p className="text-sm text-gray-600">This action cannot be undone</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6">
+              <p className="text-gray-700 mb-4">
+                Are you sure you want to delete <span className="font-semibold text-gray-900">{personToDelete.name}</span>?
+              </p>
+
+              <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-6">
+                <div className="flex items-start gap-3">
+                  <div className="w-5 h-5 text-red-500 mt-0.5">
+                    ⚠️
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-medium text-red-800 mb-1">
+                      Warning: This will permanently remove:
+                    </h4>
+                    <ul className="text-xs text-red-700 space-y-1">
+                      <li>• Person's contact information</li>
+                      <li>• All research data and insights</li>
+                      <li>• Job history and progress logs</li>
+                      <li>• Associated context snippets</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleCancelDelete}
+                  className="px-6"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="button"
+                  onClick={handleConfirmDelete}
+                  className="bg-red-600 hover:bg-red-700 text-white px-6"
+                >
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  Delete Person
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </Layout>
   );
 }
