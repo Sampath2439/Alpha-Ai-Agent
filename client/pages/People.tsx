@@ -137,6 +137,30 @@ export default function People() {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const handleDeletePerson = (personId: string, personName: string) => {
+    console.log("🗑️ Delete person clicked:", personId, personName);
+
+    // Show confirmation dialog
+    const confirmed = window.confirm(
+      `Are you sure you want to delete ${personName}?\n\nThis action cannot be undone and will remove all research data associated with this person.`
+    );
+
+    if (confirmed) {
+      console.log("✅ Delete confirmed for:", personId);
+
+      // Remove from local state (optimistic update)
+      setPeople(prev => prev.filter(person => person.id !== personId));
+
+      // TODO: Send DELETE request to API
+      console.log("🚀 Would send DELETE request to /api/people/" + personId);
+
+      // Show success message
+      alert(`${personName} has been deleted successfully.`);
+    } else {
+      console.log("❌ Delete cancelled for:", personId);
+    }
+  };
+
   const handleRefreshData = () => {
     console.log("🔄 Refresh Data clicked");
     loadPeople();
