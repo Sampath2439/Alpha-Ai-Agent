@@ -416,7 +416,10 @@ export default function People() {
                       ? "No people match your search criteria."
                       : "Get started by adding your first research target."}
                   </p>
-                  <Button className="bg-green-600 hover:bg-green-700">
+                  <Button
+                    className="bg-green-600 hover:bg-green-700"
+                    onClick={handleAddPerson}
+                  >
                     <Plus className="w-4 h-4 mr-2" />
                     Add Person
                   </Button>
